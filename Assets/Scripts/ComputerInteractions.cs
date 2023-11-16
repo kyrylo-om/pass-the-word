@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,6 +14,7 @@ public class ComputerInteractions : MonoBehaviour
 
     public Canvas movingCanvas;
     public Text passwordText;
+    public Text passwordTextCensored;
     public Text idText;
     public Text attemptsText;
     public Image enterButton;
@@ -121,6 +123,7 @@ public class ComputerInteractions : MonoBehaviour
         }
         if (menu == "printer") 
         {
+            animator.SetBool("PasswordCensored", true);
             passwordTab.GetComponent<Canvas>().enabled = false; 
             animator.SetBool("IsPlayingInitAnim", false);
             animator.SetTrigger("Reset");
@@ -909,7 +912,11 @@ public class ComputerInteractions : MonoBehaviour
                 backspaceTimer++;
             }
             if (Input.GetKeyUp(KeyCode.Backspace)) backspaceTimer = 0;
-            if(!isPTPasswordAnimRunning) passwordText.text = password;
+            if (!isPTPasswordAnimRunning)
+            {
+                passwordText.text = password;
+                passwordTextCensored.text = String.Concat(Enumerable.Repeat("*", password.Length));
+            }
         }
     }
 
@@ -918,6 +925,7 @@ public class ComputerInteractions : MonoBehaviour
         animator.SetBool("IsLine1Active", false);
         animator.SetBool("IsLine2Active", false);
         passwordTabInput = "none";
+        animator.SetBool("PasswordCensored", true);
     }
     public void EnterButtonClick()
     {
@@ -944,11 +952,13 @@ public class ComputerInteractions : MonoBehaviour
             {
                 if(passwordTabInput != "none") animator.SetBool("IsLine2Active", false);
                 animator.SetBool("IsLine1Active", true);
+                animator.SetBool("PasswordCensored", true);
             }
             else if (input == "password")
             {
                 if (passwordTabInput != "none") animator.SetBool("IsLine1Active", false);
                 animator.SetBool("IsLine2Active", true);
+                animator.SetBool("PasswordCensored", false);
             }
 
             passwordTabInput = input;
