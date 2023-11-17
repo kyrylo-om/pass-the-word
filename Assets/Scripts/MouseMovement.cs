@@ -17,6 +17,6 @@ public class MouseMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(4.2f + monitorCursor.rectTransform.anchoredPosition.x / mouseSpeed, -2, -2f + monitorCursor.rectTransform.anchoredPosition.y / mouseSpeed);
+        transform.position = new Vector3(4.2f + monitorCursor.rectTransform.anchoredPosition.x / mouseSpeed, -2, -1f + monitorCursor.rectTransform.anchoredPosition.y / mouseSpeed);
     }
 }
