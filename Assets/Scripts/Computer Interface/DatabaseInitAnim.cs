@@ -16,7 +16,7 @@ public class DatabaseInitAnim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyUp(KeyCode.C))
+        if(Input.GetKeyUp(KeyCode.Tab))
         {
             StartCoroutine(Animation());
         }
