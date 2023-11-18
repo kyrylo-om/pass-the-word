@@ -18,26 +18,27 @@ public class DatabaseInitAnim : MonoBehaviour
     {
         if(Input.GetKeyUp(KeyCode.Tab))
         {
+            for (int i = 0; i < 100; i++)
+            {
+                GameObject num = Instantiate(numPrefab);
+                num.transform.SetParent(gameObject.transform, false);
+                num.GetComponent<RectTransform>().anchoredPosition = new Vector3(Random.Range(-440, 440), Random.Range(-230, 230), 0);
+                num.GetComponent<Text>().text = Random.Range(0, 10).ToString();
+            }
             StartCoroutine(Animation());
         }
     }
 
     IEnumerator Animation()
     {
-        for(int i = 0; i < 500; i++)
-        {
-            GameObject num = Instantiate(numPrefab);
-            num.transform.SetParent(gameObject.transform, false);
-            num.GetComponent<RectTransform>().anchoredPosition = new Vector3(Random.Range(-440, 440), Random.Range(-230, 230), 0);
-            num.GetComponent<Text>().text = Random.Range(0, 10).ToString();
-        }
+        
         GameObject[] nums = GameObject.FindGameObjectsWithTag("Num");
         int count = 0;
         foreach(GameObject num in nums)
         {
             StartCoroutine(Fade(num));
             count++;
-            if(count == 25)
+            if(count == 5)
             {
                 yield return new WaitForEndOfFrame();
                 count = 0;
@@ -48,7 +49,7 @@ public class DatabaseInitAnim : MonoBehaviour
     {
         while(gameObject.GetComponent<Text>().color.a > 0)
         {
-            gameObject.GetComponent<Text>().color -= new Color(0, 0, 0, 0.25f);
+            gameObject.GetComponent<Text>().color -= new Color(0, 0, 0, 0.1f);
             yield return new WaitForEndOfFrame();
         }
         Destroy(gameObject);
