@@ -68,7 +68,7 @@ public class DragPaper : MonoBehaviour
             List<GameObject> sortedPapers = GameObject.FindGameObjectsWithTag("Paper").OrderBy(o => o.transform.position.y).ToList();
             for(int i = 0; i < sortedPapers.Count; i++)
             {
-                sortedPapers[i].transform.position = new Vector3(sortedPapers[i].transform.position.x, -2f + Convert.ToSingle(i) / 500f, sortedPapers[i].transform.position.z);
+                sortedPapers[i].transform.position = new Vector3(sortedPapers[i].transform.position.x, -2.1f + Convert.ToSingle(i) / 500f, sortedPapers[i].transform.position.z);
             }
             isMovingPaper = true;
             publicVariables.isMovingPaper = true;

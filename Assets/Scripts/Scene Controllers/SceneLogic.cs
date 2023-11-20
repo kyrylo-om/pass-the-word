@@ -46,8 +46,8 @@ public class SceneLogic : MonoBehaviour
         if (isFlickering)
         {
             double randomIntensity = rand.NextDouble();
-            spotLight.intensity = Convert.ToSingle(randomIntensity * 0.3d + 2);
-            pointLight.intensity = Convert.ToSingle(randomIntensity * 1d + 3);
+            spotLight.intensity = Convert.ToSingle(randomIntensity * 0.3d + 1);
+            pointLight.intensity = Convert.ToSingle(randomIntensity * 1d + 2);
 
         }
     }
