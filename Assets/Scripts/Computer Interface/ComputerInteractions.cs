@@ -110,6 +110,7 @@ public class ComputerInteractions : MonoBehaviour
         if (menu == "password")
         {
             passwordTab.GetComponent<Canvas>().enabled = true;
+            printerTab.GetComponent<Canvas>().enabled = false;
             animator.SetBool("IsPlayingInitAnim", true);
             animator.SetBool("IsPointerOverLine1", false);
             animator.SetBool("IsPointerOverLine2", false);
@@ -124,7 +125,8 @@ public class ComputerInteractions : MonoBehaviour
         if (menu == "printer") 
         {
             animator.SetBool("PasswordCensored", true);
-            passwordTab.GetComponent<Canvas>().enabled = false; 
+            passwordTab.GetComponent<Canvas>().enabled = false;
+            printerTab.GetComponent<Canvas>().enabled = true;
             animator.SetBool("IsPlayingInitAnim", false);
             animator.SetTrigger("Reset");
         }

@@ -16,8 +16,9 @@ public class DatabaseInitAnim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyUp(KeyCode.Tab))
+        if(Input.GetKeyUp(KeyCode.C))
         {
+            foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Num")) Destroy(obj);
             for (int i = 0; i < 100; i++)
             {
                 GameObject num = Instantiate(numPrefab);
@@ -38,7 +39,7 @@ public class DatabaseInitAnim : MonoBehaviour
         {
             StartCoroutine(Fade(num));
             count++;
-            if(count == 5)
+            if(count == 20)
             {
                 yield return new WaitForEndOfFrame();
                 count = 0;
@@ -47,11 +48,10 @@ public class DatabaseInitAnim : MonoBehaviour
     }
     IEnumerator Fade(GameObject gameObject)
     {
-        while(gameObject.GetComponent<Text>().color.a > 0)
+        while(gameObject.GetComponent<Text>().color.a < 0.2)
         {
-            gameObject.GetComponent<Text>().color -= new Color(0, 0, 0, 0.1f);
+            gameObject.GetComponent<Text>().color += new Color(0, 0, 0, 0.1f);
             yield return new WaitForEndOfFrame();
         }
-        Destroy(gameObject);
     }
 }
