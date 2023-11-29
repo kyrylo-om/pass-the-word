@@ -3,13 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class ComputerInteractions : MonoBehaviour
 {
+    public SceneLogic sceneLogic;
     public GameObject passwordTab;
 
     public Canvas movingCanvas;
@@ -34,6 +38,7 @@ public class ComputerInteractions : MonoBehaviour
 
     public GameObject printerTab;
 
+    public GameObject databaseItemPrefab;
     public GameObject printButton;
     public Text nameToFindText;
     public string nameToFind;
@@ -55,6 +60,10 @@ public class ComputerInteractions : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            DatabaseSearch("Sus");
+        }
         if (Input.GetKeyDown(KeyCode.Return))
         {
             EnterButtonClick();
@@ -1361,6 +1370,32 @@ public class ComputerInteractions : MonoBehaviour
         //nameToFindText.text = nameToFind;
     }
 
+    public void DatabaseSearch(string prompt)
+    {
+        int count = 0;
+        List<Person> searchResults = new List<Person>();
+        foreach(Person person in sceneLogic.people.Values)
+        {
+            if (person.name.Contains(prompt))
+            {
+                GameObject item = Instantiate(databaseItemPrefab);
+                Debug.Log(item);
+                item.transform.SetParent(gameObject.transform.GetChild(2).transform.GetChild(1).transform.GetChild(0), false);
+                item.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 250 - 80 * count, 0);
+                item.transform.GetChild(0).GetComponent<Text>().text = person.name + " | " + person.id;
+                count++;
+            }
+        }
+        if(prompt == "")
+        {
+            
+        }
+    }
+
+    public void InstantiateDatabaseItem()
+    {
+        
+    }
     public void FindPerson()
     {
         printButton.SetActive(true);
