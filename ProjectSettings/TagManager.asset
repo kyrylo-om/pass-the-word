@@ -16,6 +16,7 @@ TagManager:
   - Scene Logic
   - Game State Manager
   - Num
+  - DatabaseItem
   layers:
   - Default
   - TransparentFX

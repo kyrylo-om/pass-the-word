@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -24,7 +25,7 @@ public class ComputerInteractions : MonoBehaviour
     public Text attemptsText;
     public Image enterButton;
     public Image earth;
-    public Animator animator;
+    public Animator PTanimator;
     public RectMask2D enterButtonMask;
 
     public float enterButtonAnimSpeed;
@@ -39,9 +40,11 @@ public class ComputerInteractions : MonoBehaviour
 
     public GameObject printerTab;
 
+    public Animator databaseAnimator;
     public GameObject databaseItemPrefab;
     public RectTransform content;
     public GameObject printButton;
+    public Text searchButtonText;
     public Text nameToFindText;
     public string nameToFind;
     [SerializeField] private int scrollSpeed;
@@ -65,22 +68,14 @@ public class ComputerInteractions : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.S))
+        if(Input.GetKeyDown(KeyCode.Q))
         {
-            StartCoroutine(SearchDatabase("anna"));
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            StartCoroutine(SearchDatabase(" "));
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            StartCoroutine(SearchDatabase(""));
+            Invoke("StartDatabaseSearch", 1);
         }
         if (Input.GetKeyDown(KeyCode.Return))
         {
             EnterButtonClick();
-            animator.SetTrigger("EnterKeyPressed");
+            PTanimator.SetTrigger("EnterKeyPressed");
         }
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -133,12 +128,14 @@ public class ComputerInteractions : MonoBehaviour
         {
             passwordTab.GetComponent<Canvas>().enabled = true;
             printerTab.GetComponent<Canvas>().enabled = false;
-            animator.SetBool("IsPlayingInitAnim", true);
-            animator.SetBool("IsPointerOverLine1", false);
-            animator.SetBool("IsPointerOverLine2", false);
-            animator.SetBool("IsLine1Active", false);
-            animator.SetBool("IsLine2Active", false);
+            PTanimator.SetBool("IsPlayingInitAnim", true);
+            PTanimator.SetBool("IsPointerOverLine1", false);
+            PTanimator.SetBool("IsPointerOverLine2", false);
+            PTanimator.SetBool("IsLine1Active", false);
+            PTanimator.SetBool("IsLine2Active", false);
             passwordTabInput = "none";
+            databaseAnimator.SetBool("IsPlayingInitAnim", false);
+            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("DatabaseItem")) Destroy(obj);
         }
         if (menu == "history")
         {
@@ -146,11 +143,13 @@ public class ComputerInteractions : MonoBehaviour
         }
         if (menu == "printer") 
         {
-            animator.SetBool("PasswordCensored", true);
+            databaseAnimator.SetBool("IsPlayingInitAnim", true);
+            PTanimator.SetBool("PasswordCensored", true);
             passwordTab.GetComponent<Canvas>().enabled = false;
             printerTab.GetComponent<Canvas>().enabled = true;
-            animator.SetBool("IsPlayingInitAnim", false);
-            animator.SetTrigger("Reset");
+            PTanimator.SetBool("IsPlayingInitAnim", false);
+            PTanimator.SetTrigger("Reset");
+            Invoke("StartDatabaseSearch", 1.7f);
         }
         currentTab = menu;
     }
@@ -946,20 +945,20 @@ public class ComputerInteractions : MonoBehaviour
 
     public void DeselectLines()
     {
-        animator.SetBool("IsLine1Active", false);
-        animator.SetBool("IsLine2Active", false);
+        PTanimator.SetBool("IsLine1Active", false);
+        PTanimator.SetBool("IsLine2Active", false);
         passwordTabInput = "none";
-        animator.SetBool("PasswordCensored", true);
+        PTanimator.SetBool("PasswordCensored", true);
     }
     public void EnterButtonClick()
     {
         if(id == "admin" && password == "admin1234password")
         {
-            animator.SetTrigger("LoginSuccess");
+            PTanimator.SetTrigger("LoginSuccess");
         }
         else
         {
-            animator.SetTrigger("LoginFailure");
+            PTanimator.SetTrigger("LoginFailure");
             passwordTabInput = "none";
             DeselectLines();
             attempts -= 1;
@@ -974,15 +973,15 @@ public class ComputerInteractions : MonoBehaviour
             //enterBar2.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/passwordTabEnterBarInactive");
             if (input == "id")
             {
-                if(passwordTabInput != "none") animator.SetBool("IsLine2Active", false);
-                animator.SetBool("IsLine1Active", true);
-                animator.SetBool("PasswordCensored", true);
+                if(passwordTabInput != "none") PTanimator.SetBool("IsLine2Active", false);
+                PTanimator.SetBool("IsLine1Active", true);
+                PTanimator.SetBool("PasswordCensored", true);
             }
             else if (input == "password")
             {
-                if (passwordTabInput != "none") animator.SetBool("IsLine1Active", false);
-                animator.SetBool("IsLine2Active", true);
-                animator.SetBool("PasswordCensored", false);
+                if (passwordTabInput != "none") PTanimator.SetBool("IsLine1Active", false);
+                PTanimator.SetBool("IsLine2Active", true);
+                PTanimator.SetBool("PasswordCensored", false);
             }
 
             passwordTabInput = input;
@@ -1397,11 +1396,25 @@ public class ComputerInteractions : MonoBehaviour
             backspaceTimer++;
         }
         if (Input.GetKeyUp(KeyCode.Backspace)) backspaceTimer = 0;
-        //nameToFindText.text = nameToFind;
+        nameToFindText.text = nameToFind;
+
+        if(nameToFind == "")
+        {
+            searchButtonText.text = "Show all";
+        }
+        else
+        {
+            searchButtonText.text = "Initialize search";
+        }
     }
 
+    public void StartDatabaseSearch()
+    {
+        StartCoroutine(SearchDatabase(nameToFindText.text));
+    }
     public IEnumerator SearchDatabase(string prompt)
     {
+        content.anchoredPosition = new Vector2(0, 0);
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("DatabaseItem")) Destroy(obj);
         int count = 0;
         //List<Person> searchResults = new List<Person>();
@@ -1421,7 +1434,7 @@ public class ComputerInteractions : MonoBehaviour
                 }
             }
         }
-        panelHeight = count * 80 - 580;
+        panelHeight = Math.Clamp(count * 80 - 580,0,999999999);
     }
 
     public void InstantiateDatabaseItem()
@@ -1439,7 +1452,7 @@ public class ComputerInteractions : MonoBehaviour
         bool value = false;
         if (words[1] == "true") value = true;
         if (words[1] == "false") value = false;
-        animator.SetBool(words[0], value);
+        PTanimator.SetBool(words[0], value);
     }
 
     public void StartConsoleTextAnim()

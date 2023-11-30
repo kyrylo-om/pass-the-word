@@ -1782,7 +1782,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Anna Susanna
+  m_Text: 
 --- !u!222 &240701654
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2519,7 +2519,7 @@ MonoBehaviour:
   attemptsText: {fileID: 1639660401}
   enterButton: {fileID: 1376851856}
   earth: {fileID: 1647425569}
-  animator: {fileID: 484658962}
+  PTanimator: {fileID: 484658962}
   enterButtonMask: {fileID: 1567776610}
   enterButtonAnimSpeed: 100
   password: 
@@ -2528,10 +2528,14 @@ MonoBehaviour:
   passwordTabInput: id
   historyTab: {fileID: 0}
   printerTab: {fileID: 1188505837}
+  databaseAnimator: {fileID: 1188505843}
   databaseItemPrefab: {fileID: 6412661242766897423, guid: c07aa52d94d978f46b8b811829a3c6c8, type: 3}
+  content: {fileID: 1545975334}
   printButton: {fileID: 0}
-  nameToFindText: {fileID: 0}
+  searchButtonText: {fileID: 1103228229}
+  nameToFindText: {fileID: 240701653}
   nameToFind: 
+  scrollSpeed: 10
   currentTab: printer
   consoleText: {fileID: 1673472477}
   worldCursor: {fileID: 1666359972}
@@ -4482,6 +4486,58 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -294.18}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &779724067
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 779724068}
+  - component: {fileID: 779724069}
+  m_Layer: 5
+  m_Name: ContentMask
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &779724068
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779724067}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1545975334}
+  m_Father: {fileID: 1200756737}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1300, y: 600}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &779724069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779724067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding: {x: 0, y: 0, z: 0, w: 0}
+  m_Softness: {x: 0, y: 0}
 --- !u!1 &827669477 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4405820841171174114, guid: 58ef64ca55530aa4e97c25deec94990c, type: 3}
@@ -5122,7 +5178,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Initialize search
+  m_Text: Show all
 --- !u!222 &1103228230
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5656,7 +5712,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &1188505841
 Canvas:
   m_ObjectHideFlags: 0
@@ -5664,7 +5720,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1188505837}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -5804,7 +5860,6 @@ GameObject:
   - component: {fileID: 1200756737}
   - component: {fileID: 1200756739}
   - component: {fileID: 1200756738}
-  - component: {fileID: 1200756740}
   m_Layer: 5
   m_Name: ResultsPanel
   m_TagString: Untagged
@@ -5824,7 +5879,7 @@ RectTransform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 1545975334}
+  - {fileID: 779724068}
   - {fileID: 1997511220}
   m_Father: {fileID: 1188505838}
   m_RootOrder: 1
@@ -5872,20 +5927,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1200756736}
   m_CullTransparentMesh: 1
---- !u!114 &1200756740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1200756736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding: {x: 0, y: 0, z: 0, w: 0}
-  m_Softness: {x: 0, y: 0}
 --- !u!1 &1211578780 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8080292404813778855, guid: 58ef64ca55530aa4e97c25deec94990c, type: 3}
@@ -6458,7 +6499,7 @@ MonoBehaviour:
   attemptsText: {fileID: 0}
   enterButton: {fileID: 0}
   earth: {fileID: 0}
-  animator: {fileID: 0}
+  PTanimator: {fileID: 0}
   enterButtonMask: {fileID: 0}
   enterButtonAnimSpeed: 0
   password: 
@@ -6467,10 +6508,14 @@ MonoBehaviour:
   passwordTabInput: id
   historyTab: {fileID: 1409650883}
   printerTab: {fileID: 589569956}
+  databaseAnimator: {fileID: 0}
   databaseItemPrefab: {fileID: 0}
+  content: {fileID: 0}
   printButton: {fileID: 1765623077}
+  searchButtonText: {fileID: 0}
   nameToFindText: {fileID: 247906906}
   nameToFind: 
+  scrollSpeed: 0
   currentTab: printer
   consoleText: {fileID: 0}
   worldCursor: {fileID: 0}
@@ -9690,12 +9735,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1545975333}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1200756737}
+  m_Father: {fileID: 779724068}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -12578,6 +12623,7 @@ GameObject:
   - component: {fileID: 2045870182}
   - component: {fileID: 2045870184}
   - component: {fileID: 2045870183}
+  - component: {fileID: 2045870185}
   m_Layer: 5
   m_Name: SearchButton
   m_TagString: Untagged
@@ -12644,6 +12690,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2045870181}
   m_CullTransparentMesh: 1
+--- !u!114 &2045870185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2045870181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 456458528}
+          m_TargetAssemblyTypeName: ComputerInteractions, Assembly-CSharp
+          m_MethodName: StartDatabaseSearch
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &2048293987 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5835072371717917637, guid: 58ef64ca55530aa4e97c25deec94990c, type: 3}
