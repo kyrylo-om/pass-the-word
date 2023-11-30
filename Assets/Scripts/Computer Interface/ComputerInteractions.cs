@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Search;
@@ -39,9 +40,13 @@ public class ComputerInteractions : MonoBehaviour
     public GameObject printerTab;
 
     public GameObject databaseItemPrefab;
+    public RectTransform content;
     public GameObject printButton;
     public Text nameToFindText;
     public string nameToFind;
+    [SerializeField] private int scrollSpeed;
+    private float scrollingVelocity;
+    private int panelHeight;
 
 
     public string currentTab = "printer";
@@ -62,7 +67,15 @@ public class ComputerInteractions : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.S))
         {
-            DatabaseSearch("Sus");
+            StartCoroutine(SearchDatabase("anna"));
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            StartCoroutine(SearchDatabase(" "));
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            StartCoroutine(SearchDatabase(""));
         }
         if (Input.GetKeyDown(KeyCode.Return))
         {
@@ -982,6 +995,23 @@ public class ComputerInteractions : MonoBehaviour
     }
     public void PrinterTab()
     {
+        scrollingVelocity -= Input.mouseScrollDelta.y * scrollSpeed;
+        content.anchoredPosition += new Vector2(0,scrollingVelocity);
+
+        if (Math.Sign(scrollingVelocity) > 0 && scrollingVelocity > 0) scrollingVelocity -= 2;
+        else if (Math.Sign(scrollingVelocity) < 0 && scrollingVelocity < 0) scrollingVelocity += 2;
+
+        if (content.anchoredPosition.y < 0)
+        {
+            scrollingVelocity = 0;
+            content.anchoredPosition = new Vector2(0, 0);
+        }
+        if (content.anchoredPosition.y > panelHeight)
+        {
+            scrollingVelocity = 0;
+            content.anchoredPosition = new Vector2(0, panelHeight);
+        }
+
         if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift))
         {
             if (Input.GetKeyDown(KeyCode.A))
@@ -1370,26 +1400,28 @@ public class ComputerInteractions : MonoBehaviour
         //nameToFindText.text = nameToFind;
     }
 
-    public void DatabaseSearch(string prompt)
+    public IEnumerator SearchDatabase(string prompt)
     {
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("DatabaseItem")) Destroy(obj);
         int count = 0;
-        List<Person> searchResults = new List<Person>();
+        //List<Person> searchResults = new List<Person>();
         foreach(Person person in sceneLogic.people.Values)
         {
-            if (person.name.Contains(prompt))
+            if (person.name.ToLower().Contains(prompt.ToLower()) || person.id.ToLower() == prompt.ToLower())
             {
                 GameObject item = Instantiate(databaseItemPrefab);
                 Debug.Log(item);
-                item.transform.SetParent(gameObject.transform.GetChild(2).transform.GetChild(1).transform.GetChild(0), false);
+                item.transform.SetParent(gameObject.transform.GetChild(2).transform.GetChild(1).transform.GetChild(0).transform.GetChild(0), false);
                 item.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 250 - 80 * count, 0);
                 item.transform.GetChild(0).GetComponent<Text>().text = person.name + " | " + person.id;
                 count++;
+                if(count < 10)
+                {
+                    yield return new WaitForSeconds(0.03f);
+                }
             }
         }
-        if(prompt == "")
-        {
-            
-        }
+        panelHeight = count * 80 - 580;
     }
 
     public void InstantiateDatabaseItem()
