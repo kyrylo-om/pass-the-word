@@ -2530,10 +2530,13 @@ MonoBehaviour:
   printerTab: {fileID: 1188505837}
   databaseAnimator: {fileID: 1188505843}
   databaseItemPrefab: {fileID: 6412661242766897423, guid: c07aa52d94d978f46b8b811829a3c6c8, type: 3}
+  resultsText: {fileID: 1111430582}
   content: {fileID: 1545975334}
   printButton: {fileID: 0}
   searchButtonText: {fileID: 1103228229}
   nameToFindText: {fileID: 240701653}
+  queryingText: {fileID: 1997511221}
+  loadingArrow: {fileID: 1104741517}
   nameToFind: 
   scrollSpeed: 10
   currentTab: printer
@@ -5212,17 +5215,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1104741515}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 1188505838}
-  m_RootOrder: 10
+  m_Father: {fileID: 1200756737}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -195, y: 59}
+  m_AnchoredPosition: {x: -390, y: 277}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1104741517
@@ -5238,7 +5241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.03154351, g: 0.509434, b: 0, a: 1}
+  m_Color: {r: 0.03154351, g: 0.509434, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5360,7 +5363,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: showing 3 out of 219 available results within employee's work limit.
+  m_Text: 
 --- !u!222 &1111430583
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5635,6 +5638,7 @@ GameObject:
   - component: {fileID: 1188505839}
   - component: {fileID: 1188505842}
   - component: {fileID: 1188505843}
+  - component: {fileID: 1188505844}
   m_Layer: 5
   m_Name: DatabaseTab
   m_TagString: Untagged
@@ -5664,7 +5668,6 @@ RectTransform:
   - {fileID: 2045870182}
   - {fileID: 444363341}
   - {fileID: 1946812305}
-  - {fileID: 1104741516}
   m_Father: {fileID: 456458532}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5712,7 +5715,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &1188505841
 Canvas:
   m_ObjectHideFlags: 0
@@ -5720,7 +5723,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1188505837}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -5768,6 +5771,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1188505844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188505837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19481502ac480ca49bde9fa08c9a866e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1188505843}
+  movingCanvas: {fileID: 0}
+  earth: {fileID: 0}
+  cursor: {fileID: 0}
 --- !u!1 &1193814160 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1448741924835085935, guid: 58ef64ca55530aa4e97c25deec94990c, type: 3}
@@ -5881,6 +5900,7 @@ RectTransform:
   m_Children:
   - {fileID: 779724068}
   - {fileID: 1997511220}
+  - {fileID: 1104741516}
   m_Father: {fileID: 1188505838}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6510,10 +6530,13 @@ MonoBehaviour:
   printerTab: {fileID: 589569956}
   databaseAnimator: {fileID: 0}
   databaseItemPrefab: {fileID: 0}
+  resultsText: {fileID: 0}
   content: {fileID: 0}
   printButton: {fileID: 1765623077}
   searchButtonText: {fileID: 0}
   nameToFindText: {fileID: 247906906}
+  queryingText: {fileID: 0}
+  loadingArrow: {fileID: 0}
   nameToFind: 
   scrollSpeed: 0
   currentTab: printer
@@ -12320,7 +12343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.5943396, b: 0.045025684, a: 1}
+  m_Color: {r: 0, g: 0.5943396, b: 0.045025684, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

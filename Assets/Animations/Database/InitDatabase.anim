@@ -47,7 +47,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: LoadingArrow
+    path: ResultsPanel/LoadingArrow
   m_PositionCurves: []
   m_ScaleCurves: []
   m_FloatCurves:
@@ -616,7 +616,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: LoadingArrow
+    path: ResultsPanel/LoadingArrow
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_PPtrCurves: []
@@ -628,7 +628,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1815241963
+      path: 1508781445
       attribute: 4
       script: {fileID: 0}
       typeID: 4
@@ -747,7 +747,7 @@ AnimationClip:
       customType: 28
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 1815241963
+      path: 1508781445
       attribute: 304273561
       script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
       typeID: 114
@@ -1336,7 +1336,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: LoadingArrow
+    path: ResultsPanel/LoadingArrow
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -1364,7 +1364,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: LoadingArrow
+    path: ResultsPanel/LoadingArrow
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -1392,7 +1392,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: LoadingArrow
+    path: ResultsPanel/LoadingArrow
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -1438,7 +1438,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: LoadingArrow
+    path: ResultsPanel/LoadingArrow
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_EulerEditorCurves:
@@ -1449,7 +1449,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: LoadingArrow
+    path: ResultsPanel/LoadingArrow
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -1459,7 +1459,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: LoadingArrow
+    path: ResultsPanel/LoadingArrow
     classID: 224
     script: {fileID: 0}
   - curve:
@@ -1469,9 +1469,16 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: LoadingArrow
+    path: ResultsPanel/LoadingArrow
     classID: 224
     script: {fileID: 0}
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 1.5333333
+    functionName: InitializationComplete
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
