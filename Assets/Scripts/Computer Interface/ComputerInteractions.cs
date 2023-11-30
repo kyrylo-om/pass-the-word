@@ -42,6 +42,7 @@ public class ComputerInteractions : MonoBehaviour
 
     public Animator databaseAnimator;
     public GameObject databaseItemPrefab;
+    public Text resultsText;
     public RectTransform content;
     public GameObject printButton;
     public Text searchButtonText;
@@ -136,6 +137,7 @@ public class ComputerInteractions : MonoBehaviour
             passwordTabInput = "none";
             databaseAnimator.SetBool("IsPlayingInitAnim", false);
             foreach (GameObject obj in GameObject.FindGameObjectsWithTag("DatabaseItem")) Destroy(obj);
+            resultsText.text = "";
         }
         if (menu == "history")
         {
@@ -1414,6 +1416,7 @@ public class ComputerInteractions : MonoBehaviour
     }
     public IEnumerator SearchDatabase(string prompt)
     {
+        resultsText.text = "";
         content.anchoredPosition = new Vector2(0, 0);
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("DatabaseItem")) Destroy(obj);
         int count = 0;
@@ -1435,6 +1438,7 @@ public class ComputerInteractions : MonoBehaviour
             }
         }
         panelHeight = Math.Clamp(count * 80 - 580,0,999999999);
+        resultsText.text = "showing " + count + " out of " + sceneLogic.people.Count + " available results within employee's work limit.";
     }
 
     public void InstantiateDatabaseItem()
