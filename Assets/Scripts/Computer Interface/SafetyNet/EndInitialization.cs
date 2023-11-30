@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PasswordTabAnimator : MonoBehaviour
+public class EndInitialization : MonoBehaviour
 {
     public Animator animator;
     public Canvas movingCanvas;

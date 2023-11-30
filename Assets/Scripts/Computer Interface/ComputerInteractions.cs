@@ -47,6 +47,8 @@ public class ComputerInteractions : MonoBehaviour
     public GameObject printButton;
     public Text searchButtonText;
     public Text nameToFindText;
+    public Text queryingText;
+    public Image loadingArrow;
     public string nameToFind;
     [SerializeField] private int scrollSpeed;
     private float scrollingVelocity;
@@ -1412,15 +1414,31 @@ public class ComputerInteractions : MonoBehaviour
 
     public void StartDatabaseSearch()
     {
+        StartCoroutine(SearchAnimation());
+    }
+    public IEnumerator SearchAnimation()
+    {
+        resultsText.text = "";
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("DatabaseItem")) Destroy(obj);
+        int duration = UnityEngine.Random.Range(5,20);
+
+        for(int i = 0; i < duration; i++)
+        {
+            queryingText.color = new Color(0, 0.59f, 0.05f, 1);
+            loadingArrow.color = new Color(0, 0.59f, 0.05f, 1);
+            yield return new WaitForSeconds(0.001f);
+        }
+        queryingText.color = new Color(0, 0.59f, 0.05f, 0);
+        loadingArrow.color = new Color(0, 0.59f, 0.05f, 0);
+
         StartCoroutine(SearchDatabase(nameToFindText.text));
     }
     public IEnumerator SearchDatabase(string prompt)
     {
-        resultsText.text = "";
         content.anchoredPosition = new Vector2(0, 0);
-        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("DatabaseItem")) Destroy(obj);
         int count = 0;
         //List<Person> searchResults = new List<Person>();
+
         foreach(Person person in sceneLogic.people.Values)
         {
             if (person.name.ToLower().Contains(prompt.ToLower()) || person.id.ToLower() == prompt.ToLower())
