@@ -48,6 +48,7 @@ public class ComputerInteractions : MonoBehaviour
     public Text searchButtonText;
     public Text nameToFindText;
     public Text queryingText;
+    public Text noResultsText;
     public Image loadingArrow;
     public string nameToFind;
     [SerializeField] private int scrollSpeed;
@@ -140,6 +141,7 @@ public class ComputerInteractions : MonoBehaviour
             databaseAnimator.SetBool("IsPlayingInitAnim", false);
             foreach (GameObject obj in GameObject.FindGameObjectsWithTag("DatabaseItem")) Destroy(obj);
             resultsText.text = "";
+            noResultsText.text = "";
         }
         if (menu == "history")
         {
@@ -153,7 +155,7 @@ public class ComputerInteractions : MonoBehaviour
             printerTab.GetComponent<Canvas>().enabled = true;
             PTanimator.SetBool("IsPlayingInitAnim", false);
             PTanimator.SetTrigger("Reset");
-            Invoke("StartDatabaseSearch", 1.7f);
+            Invoke("StartDatabaseSearch", 0.4f);
         }
         currentTab = menu;
     }
@@ -1419,13 +1421,15 @@ public class ComputerInteractions : MonoBehaviour
     public IEnumerator SearchAnimation()
     {
         resultsText.text = "";
+        noResultsText.text = "";
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("DatabaseItem")) Destroy(obj);
-        int duration = UnityEngine.Random.Range(5,20);
+        int duration = UnityEngine.Random.Range(20,50);
 
-        for(int i = 0; i < duration; i++)
+        queryingText.color = new Color(0, 0.59f, 0.05f, 1);
+        loadingArrow.color = new Color(0, 0.59f, 0.05f, 1);
+        for (int i = 0; i < duration; i++)
         {
-            queryingText.color = new Color(0, 0.59f, 0.05f, 1);
-            loadingArrow.color = new Color(0, 0.59f, 0.05f, 1);
+            loadingArrow.transform.localEulerAngles -= new Vector3(0,0,7);
             yield return new WaitForSeconds(0.001f);
         }
         queryingText.color = new Color(0, 0.59f, 0.05f, 0);
@@ -1444,7 +1448,6 @@ public class ComputerInteractions : MonoBehaviour
             if (person.name.ToLower().Contains(prompt.ToLower()) || person.id.ToLower() == prompt.ToLower())
             {
                 GameObject item = Instantiate(databaseItemPrefab);
-                Debug.Log(item);
                 item.transform.SetParent(gameObject.transform.GetChild(2).transform.GetChild(1).transform.GetChild(0).transform.GetChild(0), false);
                 item.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 250 - 80 * count, 0);
                 item.transform.GetChild(0).GetComponent<Text>().text = person.name + " | " + person.id;
@@ -1454,6 +1457,10 @@ public class ComputerInteractions : MonoBehaviour
                     yield return new WaitForSeconds(0.03f);
                 }
             }
+        }
+        if (count == 0)
+        {
+            noResultsText.text = "No results found.";
         }
         panelHeight = Math.Clamp(count * 80 - 580,0,999999999);
         resultsText.text = "showing " + count + " out of " + sceneLogic.people.Count + " available results within employee's work limit.";

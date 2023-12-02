@@ -12,6 +12,7 @@ using UnityEngine.UI;
 
 public class SceneLogic : MonoBehaviour
 {
+    public static SceneLogic instance;
     public Light spotLight;
     public Light pointLight;
     //public GameObject lampLight;
@@ -19,12 +20,12 @@ public class SceneLogic : MonoBehaviour
     private bool isFlickering;
     public GameObject paperPrefab;
     public Dictionary<string, Person> people = new Dictionary<string, Person>();
-
     public Image cursor;
     public bool isPointerOverMonitor;
     // Start is called before the first frame update
     void Start()
     {
+        instance = gameObject.GetComponent<SceneLogic>();
         Cursor.visible = false;
 
         Invoke("LightFlicker",rand.Next(1,5));
@@ -87,7 +88,6 @@ public class SceneLogic : MonoBehaviour
 
 public class Person
 {
-    public SceneLogic sceneLogic = new SceneLogic();
     public string id;
     public int age;
     public string gender;
@@ -97,7 +97,7 @@ public class Person
     public Person()
     {
         id = GenerateID();
-        while (sceneLogic.people.ContainsKey(id))
+        while (SceneLogic.instance.people.ContainsKey(id))
         {
             id = GenerateID();
         }
