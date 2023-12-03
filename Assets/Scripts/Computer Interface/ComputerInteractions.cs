@@ -35,6 +35,7 @@ public class ComputerInteractions : MonoBehaviour
     public string passwordTabInput = "id";
     private bool isPTIdAnimRunning;
     private bool isPTPasswordAnimRunning;
+    public string currentTab = "printer";
 
     public GameObject historyTab;
 
@@ -54,9 +55,10 @@ public class ComputerInteractions : MonoBehaviour
     [SerializeField] private int scrollSpeed;
     private float scrollingVelocity;
     private int panelHeight;
+    private bool isSearching;
 
 
-    public string currentTab = "printer";
+    
     private int backspaceTimer = 0;
     public Text consoleText;
 
@@ -1416,10 +1418,11 @@ public class ComputerInteractions : MonoBehaviour
 
     public void StartDatabaseSearch()
     {
-        StartCoroutine(SearchAnimation());
+        if(!isSearching) StartCoroutine(SearchAnimation());
     }
     public IEnumerator SearchAnimation()
     {
+        isSearching = true;
         resultsText.text = "";
         noResultsText.text = "";
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("DatabaseItem")) Destroy(obj);
@@ -1464,6 +1467,7 @@ public class ComputerInteractions : MonoBehaviour
         }
         panelHeight = Math.Clamp(count * 80 - 580,0,999999999);
         resultsText.text = "showing " + count + " out of " + sceneLogic.people.Count + " available results within employee's work limit.";
+        isSearching = false;
     }
 
     public void InstantiateDatabaseItem()
