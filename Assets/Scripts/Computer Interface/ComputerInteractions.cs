@@ -4,14 +4,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.Animations;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class ComputerInteractions : MonoBehaviour
 {
@@ -43,7 +41,7 @@ public class ComputerInteractions : MonoBehaviour
 
     public Animator databaseAnimator;
     public GameObject databaseItemPrefab;
-    public Text resultsText;
+    public TMP_Text resultsText;
     public RectTransform content;
     public GameObject printButton;
     public Text searchButtonText;
@@ -1453,7 +1451,7 @@ public class ComputerInteractions : MonoBehaviour
                 GameObject item = Instantiate(databaseItemPrefab);
                 item.transform.SetParent(gameObject.transform.GetChild(2).transform.GetChild(1).transform.GetChild(0).transform.GetChild(0), false);
                 item.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 250 - 80 * count, 0);
-                item.transform.GetChild(0).GetComponent<Text>().text = person.name + " | " + person.id;
+                item.transform.GetChild(0).GetComponent<TMP_Text>().text = person.name + " | " + person.id;
                 count++;
                 if(count < 10)
                 {
@@ -1465,8 +1463,11 @@ public class ComputerInteractions : MonoBehaviour
         {
             noResultsText.text = "No results found.";
         }
+        else
+        {
+            resultsText.text = "showing " + count + " out of " + sceneLogic.people.Count + " available results within employee's work limit.";
+        }
         panelHeight = Math.Clamp(count * 80 - 580,0,999999999);
-        resultsText.text = "showing " + count + " out of " + sceneLogic.people.Count + " available results within employee's work limit.";
         isSearching = false;
     }
 
