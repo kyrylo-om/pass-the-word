@@ -72,16 +72,6 @@ public class ComputerInteractions : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            Invoke("StartDatabaseSearch", 1);
-        }
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            EnterButtonClick();
-            PTanimator.SetTrigger("EnterKeyPressed");
-        }
-
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Physics.Raycast(ray, out RaycastHit raycastHit);
         if(raycastHit.collider != null)
@@ -162,6 +152,11 @@ public class ComputerInteractions : MonoBehaviour
 
     public void PasswordTab()
     {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            EnterButtonClick();
+            PTanimator.SetTrigger("EnterKeyPressed");
+        }
         movingCanvas.transform.localPosition = new Vector3(0 + monitorCursor.transform.position.x * 5, 1.39f + monitorCursor.transform.position.y * 5, 0);
         earth.transform.localPosition = new Vector3(0 - monitorCursor.transform.position.x * 10, 0 - monitorCursor.transform.position.y * 10, 0);
         if (passwordTabInput == "id")
@@ -1000,6 +995,11 @@ public class ComputerInteractions : MonoBehaviour
     }
     public void PrinterTab()
     {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            StartDatabaseSearch();
+        }
+
         scrollingVelocity -= Input.mouseScrollDelta.y * scrollSpeed;
         content.anchoredPosition += new Vector2(0,scrollingVelocity);
 

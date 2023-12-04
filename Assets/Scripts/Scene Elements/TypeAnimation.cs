@@ -99,7 +99,7 @@ public class TypeAnimation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -322,239 +322,23 @@ public class TypeAnimation : MonoBehaviour
             StartCoroutine(KeyDownAnim(enter));
         }
 
-        if (Input.GetKeyUp(KeyCode.A))
-        {
-            StartCoroutine(KeyUpAnim(a));
-        }
-        if (Input.GetKeyUp(KeyCode.B))
-        {
-            StartCoroutine(KeyUpAnim(b));
-        }
-        if (Input.GetKeyUp(KeyCode.C))
-        {
-            StartCoroutine(KeyUpAnim(c));
-        }
-        if (Input.GetKeyUp(KeyCode.D))
-        {
-            StartCoroutine(KeyUpAnim(d));
-        }
-        if (Input.GetKeyUp(KeyCode.E))
-        {
-            StartCoroutine(KeyUpAnim(e));
-        }
-        if (Input.GetKeyUp(KeyCode.F))
-        {
-            StartCoroutine(KeyUpAnim(f));
-        }
-        if (Input.GetKeyUp(KeyCode.G))
-        {
-            StartCoroutine(KeyUpAnim(g));
-        }
-        if (Input.GetKeyUp(KeyCode.H))
-        {
-            StartCoroutine(KeyUpAnim(h));
-        }
-        if (Input.GetKeyUp(KeyCode.I))
-        {
-            StartCoroutine(KeyUpAnim(i));
-        }
-        if (Input.GetKeyUp(KeyCode.J))
-        {
-            StartCoroutine(KeyUpAnim(j));
-        }
-        if (Input.GetKeyUp(KeyCode.K))
-        {
-            StartCoroutine(KeyUpAnim(k));
-        }
-        if (Input.GetKeyUp(KeyCode.L))
-        {
-            StartCoroutine(KeyUpAnim(l));
-        }
-        if (Input.GetKeyUp(KeyCode.M))
-        {
-            StartCoroutine(KeyUpAnim(m));
-        }
-        if (Input.GetKeyUp(KeyCode.N))
-        {
-            StartCoroutine(KeyUpAnim(n));
-        }
-        if (Input.GetKeyUp(KeyCode.O))
-        {
-            StartCoroutine(KeyUpAnim(o));
-        }
-        if (Input.GetKeyUp(KeyCode.P))
-        {
-            StartCoroutine(KeyUpAnim(p));
-        }
-        if (Input.GetKeyUp(KeyCode.Q))
-        {
-            StartCoroutine(KeyUpAnim(q));
-        }
-        if (Input.GetKeyUp(KeyCode.R))
-        {
-            StartCoroutine(KeyUpAnim(r));
-        }
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            StartCoroutine(KeyUpAnim(s));
-        }
-        if (Input.GetKeyUp(KeyCode.T))
-        {
-            StartCoroutine(KeyUpAnim(t));
-        }
-        if (Input.GetKeyUp(KeyCode.U))
-        {
-            StartCoroutine(KeyUpAnim(u));
-        }
-        if (Input.GetKeyUp(KeyCode.V))
-        {
-            StartCoroutine(KeyUpAnim(v));
-        }
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            StartCoroutine(KeyUpAnim(w));
-        }
-        if (Input.GetKeyUp(KeyCode.X))
-        {
-            StartCoroutine(KeyUpAnim(x));
-        }
-        if (Input.GetKeyUp(KeyCode.Y))
-        {
-            StartCoroutine(KeyUpAnim(y));
-        }
-        if (Input.GetKeyUp(KeyCode.Z))
-        {
-            StartCoroutine(KeyUpAnim(z));
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha1))
-        {
-            StartCoroutine(KeyUpAnim(a1));
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha2))
-        {
-            StartCoroutine(KeyUpAnim(a2));
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha3))
-        {
-            StartCoroutine(KeyUpAnim(a3));
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha4))
-        {
-            StartCoroutine(KeyUpAnim(a4));
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha5))
-        {
-            StartCoroutine(KeyUpAnim(a5));
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha6))
-        {
-            StartCoroutine(KeyUpAnim(a6));
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha7))
-        {
-            StartCoroutine(KeyUpAnim(a7));
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha8))
-        {
-            StartCoroutine(KeyUpAnim(a8));
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha9))
-        {
-            StartCoroutine(KeyUpAnim(a9));
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha0))
-        {
-            StartCoroutine(KeyUpAnim(a0));
-        }
-        if (Input.GetKeyUp(KeyCode.Minus))
-        {
-            StartCoroutine(KeyUpAnim(minus));
-        }
-        if (Input.GetKeyUp(KeyCode.Equals))
-        {
-            StartCoroutine(KeyUpAnim(plus));
-        }
-        if (Input.GetKeyUp(KeyCode.LeftBracket))
-        {
-            StartCoroutine(KeyUpAnim(leftBracket));
-        }
-        if (Input.GetKeyUp(KeyCode.RightBracket))
-        {
-            StartCoroutine(KeyUpAnim(rightBracket));
-        }
-        if (Input.GetKeyUp(KeyCode.Semicolon))
-        {
-            StartCoroutine(KeyUpAnim(column));
-        }
-        if (Input.GetKeyUp(KeyCode.Quote))
-        {
-            StartCoroutine(KeyUpAnim(quote));
-        }
-        if (Input.GetKeyUp(KeyCode.Backslash))
-        {
-            StartCoroutine(KeyUpAnim(backslash));
-        }
-        if (Input.GetKeyUp(KeyCode.Comma))
-        {
-            StartCoroutine(KeyUpAnim(comma));
-        }
-        if (Input.GetKeyUp(KeyCode.Period))
-        {
-            StartCoroutine(KeyUpAnim(dot));
-        }
-        if (Input.GetKeyUp(KeyCode.Slash))
-        {
-            StartCoroutine(KeyUpAnim(slash));
-        }
-        if (Input.GetKeyUp(KeyCode.CapsLock))
-        {
-            StartCoroutine(KeyUpAnim(capsLock));
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
-        {
-            StartCoroutine(KeyUpAnim(leftShift));
-        }
-        if (Input.GetKeyUp(KeyCode.Tab))
-        {
-            StartCoroutine(KeyUpAnim(tab));
-        }
-        if (Input.GetKeyUp(KeyCode.BackQuote))
-        {
-            StartCoroutine(KeyUpAnim(tilda));
-        }
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {
-            StartCoroutine(KeyUpAnim(esc));
-        }
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            StartCoroutine(KeyUpAnim(space));
-        }
-        if (Input.GetKeyUp(KeyCode.Backspace))
-        {
-            StartCoroutine(KeyUpAnim(backspace));
-        }
-        if (Input.GetKeyUp(KeyCode.Return))
-        {
-            StartCoroutine(KeyUpAnim(enter));
-        }
-
     }
     IEnumerator KeyDownAnim(GameObject key)
     {
+        StopCoroutine(KeyUpAnim(key));
         while(key.transform.localPosition.y >= -0.12f)
         {
-            isKeyDownAnim = true;
             key.transform.localPosition -= new Vector3(0, 0.02f, 0);
             yield return new WaitForEndOfFrame();
         }
-        if(key.transform.localPosition.y < -0.12f) isKeyDownAnim = false;
+        if(key.transform.localPosition.y < -0.12f) StartCoroutine(KeyUpAnim(key));
+        
     }
     IEnumerator KeyUpAnim(GameObject key)
     {
         while (key.transform.localPosition.y < 0.02f)
         {
-            if(!isKeyDownAnim) key.transform.localPosition += new Vector3(0, 0.02f, 0);
+            key.transform.localPosition += new Vector3(0, 0.02f, 0);
             yield return new WaitForEndOfFrame();
         }
     }
