@@ -59,9 +59,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: AzeretMono-Thin SDF
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: -2079841319
   material: {fileID: 9036661435942040074}
-  materialHashCode: 0
+  materialHashCode: -1171794343
   m_Version: 1.1.0
   m_SourceFontFileGUID: f33c072aa61e5b44a81cc0a190df74da
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: f33c072aa61e5b44a81cc0a190df74da, type: 3}
@@ -5613,9 +5613,9 @@ Material:
     - _OutlineWidth: 0
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
-    - _ScaleRatioA: 1
-    - _ScaleRatioB: 1
-    - _ScaleRatioC: 1
+    - _ScaleRatioA: 0.9
+    - _ScaleRatioB: 0.73125
+    - _ScaleRatioC: 0.73125
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0
