@@ -44,6 +44,7 @@ public class ComputerInteractions : MonoBehaviour
     public TMP_Text resultsText;
     public RectTransform content;
     public GameObject printButton;
+    public Image checkmark;
     public Text searchButtonText;
     public Text nameToFindText;
     public Text queryingText;
@@ -1449,7 +1450,7 @@ public class ComputerInteractions : MonoBehaviour
             if (person.name.ToLower().Contains(prompt.ToLower()) || person.id.ToLower() == prompt.ToLower())
             {
                 GameObject item = Instantiate(databaseItemPrefab);
-                item.transform.SetParent(gameObject.transform.GetChild(2).transform.GetChild(1).transform.GetChild(0).transform.GetChild(0), false);
+                item.transform.SetParent(gameObject.transform.GetChild(2).transform.GetChild(1).transform.GetChild(3).transform.GetChild(0), false);
                 item.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 250 - 80 * count, 0);
                 item.transform.GetChild(0).GetComponent<TMP_Text>().text = person.name + " | " + person.id;
                 count++;
@@ -1478,6 +1479,17 @@ public class ComputerInteractions : MonoBehaviour
     public void FindPerson()
     {
         printButton.SetActive(true);
+    }
+
+    public void CheckmarkHover()
+    {
+        Debug.Log("in");
+        checkmark.color = new Color(0.08f,0.68f,0,0.2f);
+    }
+    public void CheckmarkOut()
+    {
+        Debug.Log("out");
+        checkmark.color = new Color(0.08f, 0.68f, 0, 0);
     }
 
     public void SetBoolParameter(string input)
