@@ -1483,12 +1483,10 @@ public class ComputerInteractions : MonoBehaviour
 
     public void CheckmarkHover()
     {
-        Debug.Log("in");
         checkmark.color = new Color(0.08f,0.68f,0,0.2f);
     }
     public void CheckmarkOut()
     {
-        Debug.Log("out");
         checkmark.color = new Color(0.08f, 0.68f, 0, 0);
     }
 
@@ -1496,9 +1494,10 @@ public class ComputerInteractions : MonoBehaviour
     {
         string[] words = input.Split(' ');
         bool value = false;
-        if (words[1] == "true") value = true;
-        if (words[1] == "false") value = false;
-        PTanimator.SetBool(words[0], value);
+        if (words[2] == "true") value = true;
+        if (words[2] == "false") value = false;
+        if (words[0] == "PT") PTanimator.SetBool(words[1], value);
+        if (words[0] == "DT") databaseAnimator.SetBool(words[1], value);
     }
 
     public void StartConsoleTextAnim()
