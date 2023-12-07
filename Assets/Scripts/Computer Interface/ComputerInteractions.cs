@@ -13,6 +13,8 @@ using UnityEngine.UI;
 
 public class ComputerInteractions : MonoBehaviour
 {
+    //SAFETYNET VARIABLES
+
     public SceneLogic sceneLogic;
     public GameObject passwordTab;
 
@@ -37,6 +39,8 @@ public class ComputerInteractions : MonoBehaviour
 
     public GameObject historyTab;
 
+    //DATABASE VARIABLES
+
     public GameObject printerTab;
 
     public Animator databaseAnimator;
@@ -50,13 +54,16 @@ public class ComputerInteractions : MonoBehaviour
     public Text queryingText;
     public Text noResultsText;
     public Image loadingArrow;
+    public Image consoleArrow;
+    public Image underscore;
     public string nameToFind;
     [SerializeField] private int scrollSpeed;
     private float scrollingVelocity;
     private int panelHeight;
     private bool isSearching;
+    public bool isThereConsoleText = false;
 
-
+    //GENERAL VARIABLES
     
     private int backspaceTimer = 0;
     public Text consoleText;
@@ -68,6 +75,7 @@ public class ComputerInteractions : MonoBehaviour
     void Start()
     {
         StartConsoleTextAnim();
+        StartCoroutine(ConsoleAnim());
     }
 
     // Update is called once per frame
@@ -1403,16 +1411,25 @@ public class ComputerInteractions : MonoBehaviour
             backspaceTimer++;
         }
         if (Input.GetKeyUp(KeyCode.Backspace)) backspaceTimer = 0;
+
+        //if (nameToFind.Length >= 27) nameToFind[nameToFind.Length] = "";
+
         nameToFindText.text = nameToFind;
 
         if(nameToFind == "")
         {
+            isThereConsoleText = false;
+            underscore.enabled = false;
             searchButtonText.text = "Show all";
         }
         else
         {
+            isThereConsoleText = true;
+            consoleArrow.enabled = false;
             searchButtonText.text = "Initialize search";
         }
+
+        underscore.rectTransform.anchoredPosition = new Vector2(-222 + 16.4f * nameToFind.Length, -10);
     }
 
     public void StartDatabaseSearch()
@@ -1471,11 +1488,6 @@ public class ComputerInteractions : MonoBehaviour
         panelHeight = Math.Clamp(count * 80 - 580,0,999999999);
         isSearching = false;
     }
-
-    public void InstantiateDatabaseItem()
-    {
-        
-    }
     public void FindPerson()
     {
         printButton.SetActive(true);
@@ -1488,6 +1500,43 @@ public class ComputerInteractions : MonoBehaviour
     public void CheckmarkOut()
     {
         checkmark.color = new Color(0.08f, 0.68f, 0, 0);
+    }
+
+    //should make changing between text and no text a trigger and change image enablad to true when changing states
+    public IEnumerator ConsoleAnim()
+    {
+        bool animIterator = true;
+        while(true)
+        {
+            if(!isThereConsoleText)
+            {
+                if (animIterator)
+                {
+                    consoleArrow.enabled = false;
+                    animIterator = false;
+                }
+                else if (!animIterator)
+                {
+                    consoleArrow.enabled = true;
+                    animIterator = true;
+                }
+            }
+            if (isThereConsoleText)
+            {
+                if (animIterator)
+                {
+                    underscore.enabled = false;
+                    animIterator = false;
+                }
+                else if (!animIterator)
+                {
+                    underscore.enabled = true;
+                    animIterator = true;
+                }
+            }
+            
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 
     public void SetBoolParameter(string input)
