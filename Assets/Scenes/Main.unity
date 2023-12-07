@@ -1590,6 +1590,38 @@ MonoBehaviour:
             m_StringArgument: DT IsPointerOverInputField false
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 456458528}
+          m_TargetAssemblyTypeName: ComputerInteractions, Assembly-CSharp
+          m_MethodName: SetBoolParameter
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: DT IsPointerDownInputField true
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 456458528}
+          m_TargetAssemblyTypeName: ComputerInteractions, Assembly-CSharp
+          m_MethodName: SetBoolParameter
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: DT IsPointerDownInputField false
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &196213096 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1143371929217809426, guid: 58ef64ca55530aa4e97c25deec94990c, type: 3}
@@ -13338,22 +13370,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates:
-  - eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 456458528}
-          m_TargetAssemblyTypeName: ComputerInteractions, Assembly-CSharp
-          m_MethodName: StartDatabaseSearch
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - eventID: 0
     callback:
       m_PersistentCalls:
@@ -13384,6 +13400,50 @@ MonoBehaviour:
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: DT IsPointerOverSearchButton false
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 456458528}
+          m_TargetAssemblyTypeName: ComputerInteractions, Assembly-CSharp
+          m_MethodName: SetBoolParameter
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: DT IsPointerDownSearchButton true
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 456458528}
+          m_TargetAssemblyTypeName: ComputerInteractions, Assembly-CSharp
+          m_MethodName: SetBoolParameter
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: DT IsPointerDownSearchButton false
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 456458528}
+          m_TargetAssemblyTypeName: ComputerInteractions, Assembly-CSharp
+          m_MethodName: StartDatabaseSearch
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
 --- !u!1 &2048293987 stripped
