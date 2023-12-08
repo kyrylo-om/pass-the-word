@@ -62,6 +62,7 @@ public class ComputerInteractions : MonoBehaviour
     private int panelHeight;
     private bool isSearching;
     public bool isThereConsoleText = false;
+    public bool showCompromised = false;
 
     //GENERAL VARIABLES
     
@@ -1006,6 +1007,7 @@ public class ComputerInteractions : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            databaseAnimator.SetTrigger("EnterKeyPressed");
             StartDatabaseSearch();
         }
 
@@ -1412,24 +1414,29 @@ public class ComputerInteractions : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.Backspace)) backspaceTimer = 0;
 
-        //if (nameToFind.Length >= 27) nameToFind[nameToFind.Length] = "";
+        if (nameToFind.Length >= 27)
+        {
+            nameToFind = nameToFind.Remove(nameToFind.Length - 1);
+        }
 
         nameToFindText.text = nameToFind;
 
-        if(nameToFind == "")
+        if(nameToFind == "" && isThereConsoleText)
         {
             isThereConsoleText = false;
             underscore.enabled = false;
+            consoleArrow.enabled = true;
             searchButtonText.text = "Show all";
         }
-        else
+        else if(nameToFind != "" && !isThereConsoleText)
         {
             isThereConsoleText = true;
-            consoleArrow.enabled = false;
+            consoleArrow.enabled = true;
+            underscore.enabled = true;
             searchButtonText.text = "Initialize search";
         }
 
-        underscore.rectTransform.anchoredPosition = new Vector2(-222 + 16.4f * nameToFind.Length, -10);
+        underscore.rectTransform.anchoredPosition = new Vector2(-200 + 16.4f * nameToFind.Length, -10);
     }
 
     public void StartDatabaseSearch()
@@ -1495,11 +1502,30 @@ public class ComputerInteractions : MonoBehaviour
 
     public void CheckmarkHover()
     {
-        checkmark.color = new Color(0.08f,0.68f,0,0.2f);
+        if (!showCompromised)
+        {
+            checkmark.color = new Color(0.08f, 0.68f, 0, 0.2f);
+        }
     }
     public void CheckmarkOut()
     {
-        checkmark.color = new Color(0.08f, 0.68f, 0, 0);
+        if (!showCompromised)
+        {
+            checkmark.color = new Color(0.08f, 0.68f, 0, 0);
+        }
+    }
+    public void CheckmarkClick()
+    {
+        showCompromised = !showCompromised;
+        StartDatabaseSearch();
+        if(showCompromised)
+        {
+            checkmark.color = new Color(0.08f, 0.68f, 0, 1);
+        }
+        else
+        {
+            checkmark.color = new Color(0.08f, 0.68f, 0, 0);
+        }
     }
 
     //should make changing between text and no text a trigger and change image enablad to true when changing states
