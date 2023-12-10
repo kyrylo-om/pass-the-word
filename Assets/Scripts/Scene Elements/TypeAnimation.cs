@@ -93,9 +93,6 @@ public class TypeAnimation : MonoBehaviour
     public GameObject upArrow;
     public GameObject downArrow;
 
-    
-    private int KeyAnimTimer = 0;
-    private bool isKeyDownAnim = false;
     // Start is called before the first frame update
     void Start()
     {

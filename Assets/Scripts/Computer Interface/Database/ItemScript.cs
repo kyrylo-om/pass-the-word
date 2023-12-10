@@ -7,9 +7,12 @@ public class ItemScript : MonoBehaviour
 {
     private bool isMouseOver;
     [SerializeField] private Image itemGlow;
+    public Person attachedPerson;
+    public ComputerInteractions computerInteractions;
     // Start is called before the first frame update
     void Start()
     {
+        computerInteractions = GameObject.FindGameObjectWithTag("Computer Interface").GetComponent<ComputerInteractions>();
         isMouseOver = false;
     }
 
@@ -33,5 +36,9 @@ public class ItemScript : MonoBehaviour
     public void MouseExit()
     {
         isMouseOver = false;
+    }
+    public void OpenPersonInfo()
+    {
+        computerInteractions.OpenPersonInfo(attachedPerson.name, attachedPerson.age, attachedPerson.gender, attachedPerson.citizenship);
     }
 }

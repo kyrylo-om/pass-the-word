@@ -8,6 +8,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -56,6 +57,9 @@ public class ComputerInteractions : MonoBehaviour
     public Image loadingArrow;
     public Image consoleArrow;
     public Image underscore;
+    public Text infoText;
+    public Text personNameText;
+    public Image personPortrait;
     public string nameToFind;
     [SerializeField] private int scrollSpeed;
     private float scrollingVelocity;
@@ -63,9 +67,10 @@ public class ComputerInteractions : MonoBehaviour
     private bool isSearching;
     public bool isThereConsoleText = false;
     public bool showCompromised = false;
+    public bool personInfoWindowOpened = false;
 
     //GENERAL VARIABLES
-    
+
     private int backspaceTimer = 0;
     public Text consoleText;
 
@@ -156,6 +161,7 @@ public class ComputerInteractions : MonoBehaviour
             PTanimator.SetBool("IsPlayingInitAnim", false);
             PTanimator.SetTrigger("Reset");
             Invoke("StartDatabaseSearch", 0.4f);
+            if(personInfoWindowOpened) databaseAnimator.SetTrigger("OpenWindow");
         }
         currentTab = menu;
     }
@@ -552,7 +558,7 @@ public class ComputerInteractions : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.Backspace))
             {
-                if (backspaceTimer == 0 && id != "" || backspaceTimer >= 60 && id != "") id = id.Remove(id.Length - 1);
+                if (backspaceTimer == 0 && id != "" || backspaceTimer >= 30 && id != "") id = id.Remove(id.Length - 1);
                 backspaceTimer++;
             }
             if (Input.GetKeyUp(KeyCode.Backspace)) backspaceTimer = 0;
@@ -942,7 +948,7 @@ public class ComputerInteractions : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.Backspace))
             {
-                if (backspaceTimer == 0 && password != "" || backspaceTimer >= 60 && password != "") password = password.Remove(password.Length - 1);
+                if (backspaceTimer == 0 && password != "" || backspaceTimer >= 30 && password != "") password = password.Remove(password.Length - 1);
                 backspaceTimer++;
             }
             if (Input.GetKeyUp(KeyCode.Backspace)) backspaceTimer = 0;
@@ -1409,7 +1415,7 @@ public class ComputerInteractions : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Backspace))
         {
-            if (backspaceTimer == 0 && nameToFind != "" || backspaceTimer >= 60 && nameToFind != "") nameToFind = nameToFind.Remove(nameToFind.Length - 1);
+            if (backspaceTimer == 0 && nameToFind != "" || backspaceTimer >= 30 && nameToFind != "") nameToFind = nameToFind.Remove(nameToFind.Length - 1);
             backspaceTimer++;
         }
         if (Input.GetKeyUp(KeyCode.Backspace)) backspaceTimer = 0;
@@ -1474,6 +1480,7 @@ public class ComputerInteractions : MonoBehaviour
             if (person.name.ToLower().Contains(prompt.ToLower()) || person.id.ToLower() == prompt.ToLower())
             {
                 GameObject item = Instantiate(databaseItemPrefab);
+                item.GetComponent<ItemScript>().attachedPerson = person;
                 item.transform.SetParent(gameObject.transform.GetChild(2).transform.GetChild(1).transform.GetChild(3).transform.GetChild(0), false);
                 item.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 250 - 80 * count, 0);
                 item.transform.GetChild(0).GetComponent<TMP_Text>().text = person.name + " | " + person.id;
@@ -1495,9 +1502,20 @@ public class ComputerInteractions : MonoBehaviour
         panelHeight = Math.Clamp(count * 80 - 580,0,999999999);
         isSearching = false;
     }
-    public void FindPerson()
+    public void OpenPersonInfo(string name, int age, string gender, string citizenship)
     {
-        printButton.SetActive(true);
+        personInfoWindowOpened = true;
+        personNameText.text = name;
+        infoText.text = "Age: " + age.ToString() + "\nGender: " + gender + "\nCitizenship: " + citizenship;
+        databaseAnimator.SetTrigger("OpenWindow");
+    }
+    public void ClosePersonInfo()
+    {
+        if(personInfoWindowOpened)
+        {
+            personInfoWindowOpened = false;
+            databaseAnimator.SetTrigger("CloseWindow");
+        }
     }
 
     public void CheckmarkHover()
@@ -1528,7 +1546,6 @@ public class ComputerInteractions : MonoBehaviour
         }
     }
 
-    //should make changing between text and no text a trigger and change image enablad to true when changing states
     public IEnumerator ConsoleAnim()
     {
         bool animIterator = true;
@@ -1563,6 +1580,19 @@ public class ComputerInteractions : MonoBehaviour
             
             yield return new WaitForSeconds(0.5f);
         }
+    }
+
+    public void PrintPaper()
+    {
+        //transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = name;
+        //transform.GetChild(0).transform.GetChild(3).GetComponent<Text>().text = age.ToString();
+        //transform.GetChild(0).transform.GetChild(4).GetComponent<Text>().text = gender;
+        //transform.GetChild(0).transform.GetChild(5).GetComponent<Text>().text = dateOfBirth;
+        //transform.GetChild(0).transform.GetChild(6).GetComponent<Text>().text = citizenship;
+        //transform.GetChild(0).transform.GetChild(8).GetComponent<Text>().text = id;
+        //
+        //if (gender == "male") transform.GetChild(0).transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/malePortrait");
+        //else if (gender == "female") transform.GetChild(0).transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/femalePortrait");
     }
 
     public void SetBoolParameter(string input)

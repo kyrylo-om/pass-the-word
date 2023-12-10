@@ -9,6 +9,7 @@ TagManager:
   - Game State Manager
   - Num
   - DatabaseItem
+  - Computer Interface
   layers:
   - Default
   - TransparentFX

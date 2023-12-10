@@ -36,13 +36,8 @@ public class SceneLogic : MonoBehaviour
     void Update()
     {
         cursor.transform.position = Input.mousePosition;
-        //Debug.Log(people);
-        if (Input.GetKeyDown(KeyCode.Slash))
-        {
-            GeneratePerson();
-        }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Slash))
         {
             foreach (string key in people.Keys.ToList())
             {
