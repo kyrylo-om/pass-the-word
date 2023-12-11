@@ -17,7 +17,6 @@ public class SceneLogic : MonoBehaviour
     //public GameObject lampLight;
     System.Random rand = new System.Random();
     private bool isFlickering;
-    public GameObject paperPrefab;
     public Dictionary<string, Person> people = new Dictionary<string, Person>();
     public Image cursor;
     public bool isPointerOverMonitor;

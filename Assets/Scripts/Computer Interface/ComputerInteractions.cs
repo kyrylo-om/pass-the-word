@@ -1,9 +1,12 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Net.Mail;
+using System.Threading;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -60,6 +63,8 @@ public class ComputerInteractions : MonoBehaviour
     public Text infoText;
     public Text personNameText;
     public Image personPortrait;
+    public Text printText;
+    public GameObject paperPrefab;
     public string nameToFind;
     [SerializeField] private int scrollSpeed;
     private float scrollingVelocity;
@@ -68,6 +73,12 @@ public class ComputerInteractions : MonoBehaviour
     public bool isThereConsoleText = false;
     public bool showCompromised = false;
     public bool personInfoWindowOpened = false;
+    public bool option1Clicked = false;
+    public bool option2Clicked = false;
+    public bool option3Clicked = false;
+    public bool option4Clicked = false;
+    public bool isPlayingPrintAnim = false;
+    public Person openedPerson;
 
     //GENERAL VARIABLES
 
@@ -1469,6 +1480,51 @@ public class ComputerInteractions : MonoBehaviour
 
         StartCoroutine(SearchDatabase(nameToFindText.text));
     }
+    //would be cooler if i made the progress random
+    public void StartPrinting()
+    {
+        if (!isPlayingPrintAnim)
+        {
+            databaseAnimator.SetBool("IsPointerDownPrintButton", false);
+        }
+        StartCoroutine(PrintingTextAnim());
+        StartCoroutine(PrintAnimation());
+    }
+    public IEnumerator PrintingTextAnim()
+    {
+        isPlayingPrintAnim = true;
+        printText.text = "Printing";
+        yield return new WaitForSeconds(0.2f);
+        printText.text = "Printing.";
+        yield return new WaitForSeconds(0.2f);
+        printText.text = "Printing..";
+        yield return new WaitForSeconds(0.2f);
+        printText.text = "Printing...";
+        yield return new WaitForSeconds(0.4f);
+        printText.text = "Print";
+
+        isPlayingPrintAnim = false;
+    }
+    public IEnumerator PrintAnimation()
+    {
+        GameObject paper = Instantiate(paperPrefab, new Vector3(6.6f, -0.2f, 1.5f), Quaternion.Euler(0, 5, 0));
+        paper.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = openedPerson.name;
+        paper.transform.GetChild(0).transform.GetChild(3).GetComponent<Text>().text = openedPerson.age.ToString();
+        paper.transform.GetChild(0).transform.GetChild(4).GetComponent<Text>().text = openedPerson.gender;
+        paper.transform.GetChild(0).transform.GetChild(5).GetComponent<Text>().text = openedPerson.dateOfBirth;
+        paper.transform.GetChild(0).transform.GetChild(6).GetComponent<Text>().text = openedPerson.citizenship;
+        paper.transform.GetChild(0).transform.GetChild(8).GetComponent<Text>().text = openedPerson.id;
+
+        if (openedPerson.gender == "male") paper.transform.GetChild(0).transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/malePortrait");
+        else if (openedPerson.gender == "female") paper.transform.GetChild(0).transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/femalePortrait");
+
+        yield return null;
+        //while (paper.transform.position.z > -1.5f)
+        //{
+        //    paper.transform.position = paper.transform.forward * 0.01f;
+        //    yield return new WaitForEndOfFrame();
+        //}
+    }
     public IEnumerator SearchDatabase(string prompt)
     {
         content.anchoredPosition = new Vector2(0, 0);
@@ -1502,8 +1558,9 @@ public class ComputerInteractions : MonoBehaviour
         panelHeight = Math.Clamp(count * 80 - 580,0,999999999);
         isSearching = false;
     }
-    public void OpenPersonInfo(string name, int age, string gender, string citizenship)
+    public void OpenPersonInfo(string name, int age, string gender, string citizenship, Person attachedPerson)
     {
+        openedPerson = attachedPerson;
         personInfoWindowOpened = true;
         personNameText.text = name;
         infoText.text = "Age: " + age.ToString() + "\nGender: " + gender + "\nCitizenship: " + citizenship;
@@ -1513,6 +1570,7 @@ public class ComputerInteractions : MonoBehaviour
     {
         if(personInfoWindowOpened)
         {
+            openedPerson = null;
             personInfoWindowOpened = false;
             databaseAnimator.SetTrigger("CloseWindow");
         }
@@ -1544,6 +1602,27 @@ public class ComputerInteractions : MonoBehaviour
         {
             checkmark.color = new Color(0.08f, 0.68f, 0, 0);
         }
+    }
+
+    public void Option1Click()
+    {
+        option1Clicked = !option1Clicked;
+        databaseAnimator.SetBool("IsOption1Clicked", option1Clicked);
+    }
+    public void Option2Click()
+    {
+        option2Clicked = !option2Clicked;
+        databaseAnimator.SetBool("IsOption2Clicked", option2Clicked);
+    }
+    public void Option3Click()
+    {
+        option3Clicked = !option3Clicked;
+        databaseAnimator.SetBool("IsOption3Clicked", option3Clicked);
+    }
+    public void Option4Click()
+    {
+        option4Clicked = !option4Clicked;
+        databaseAnimator.SetBool("IsOption4Clicked", option4Clicked);
     }
 
     public IEnumerator ConsoleAnim()
@@ -1580,19 +1659,6 @@ public class ComputerInteractions : MonoBehaviour
             
             yield return new WaitForSeconds(0.5f);
         }
-    }
-
-    public void PrintPaper()
-    {
-        //transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = name;
-        //transform.GetChild(0).transform.GetChild(3).GetComponent<Text>().text = age.ToString();
-        //transform.GetChild(0).transform.GetChild(4).GetComponent<Text>().text = gender;
-        //transform.GetChild(0).transform.GetChild(5).GetComponent<Text>().text = dateOfBirth;
-        //transform.GetChild(0).transform.GetChild(6).GetComponent<Text>().text = citizenship;
-        //transform.GetChild(0).transform.GetChild(8).GetComponent<Text>().text = id;
-        //
-        //if (gender == "male") transform.GetChild(0).transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/malePortrait");
-        //else if (gender == "female") transform.GetChild(0).transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/femalePortrait");
     }
 
     public void SetBoolParameter(string input)
