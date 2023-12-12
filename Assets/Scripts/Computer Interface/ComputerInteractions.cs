@@ -1486,9 +1486,9 @@ public class ComputerInteractions : MonoBehaviour
         if (!isPlayingPrintAnim)
         {
             databaseAnimator.SetBool("IsPointerDownPrintButton", false);
+            StartCoroutine(PrintingTextAnim());
+            StartCoroutine(PrintAnimation());
         }
-        StartCoroutine(PrintingTextAnim());
-        StartCoroutine(PrintAnimation());
     }
     public IEnumerator PrintingTextAnim()
     {
@@ -1503,6 +1503,7 @@ public class ComputerInteractions : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
         printText.text = "Print";
 
+        yield return new WaitForSeconds(0.4f);
         isPlayingPrintAnim = false;
     }
     public IEnumerator PrintAnimation()
@@ -1518,12 +1519,18 @@ public class ComputerInteractions : MonoBehaviour
         if (openedPerson.gender == "male") paper.transform.GetChild(0).transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/malePortrait");
         else if (openedPerson.gender == "female") paper.transform.GetChild(0).transform.GetChild(1).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/femalePortrait");
 
-        yield return null;
-        //while (paper.transform.position.z > -1.5f)
-        //{
-        //    paper.transform.position = paper.transform.forward * 0.01f;
-        //    yield return new WaitForEndOfFrame();
-        //}
+        while (paper.transform.position.z > -1.4f)
+        {
+            paper.transform.localPosition -= paper.transform.forward * Time.deltaTime * 3;
+            yield return new WaitForEndOfFrame();
+        }
+        paper.transform.position = new Vector3(UnityEngine.Random.Range(-4,4), -2.1f, UnityEngine.Random.Range(-6.5f, - 3.8f));
+        paper.transform.rotation = Quaternion.Euler(0, UnityEngine.Random.Range(-50,50),0);
+        List<GameObject> sortedPapers = GameObject.FindGameObjectsWithTag("Paper").OrderBy(o => o.transform.position.y).ToList();
+        for (int i = 0; i < sortedPapers.Count; i++)
+        {
+            sortedPapers[i].transform.position = new Vector3(sortedPapers[i].transform.position.x, -2.1f + Convert.ToSingle(i) / 500f, sortedPapers[i].transform.position.z);
+        }
     }
     public IEnumerator SearchDatabase(string prompt)
     {
