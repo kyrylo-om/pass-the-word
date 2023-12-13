@@ -105,7 +105,7 @@ public class ComputerInteractions : MonoBehaviour
             if (raycastHit.transform.name == "MonitorCollider")
             {
                 worldCursor.GetComponent<Image>().enabled = false;
-                monitorCursor.transform.position = new Vector3(raycastHit.point.x + 0.1f, raycastHit.point.y - 0.1f, 0.25f);
+                monitorCursor.GetComponent<RectTransform>().anchoredPosition = new Vector3(raycastHit.point.x * 130 + 5, raycastHit.point.y * 130 - 185, 0);
             }
             else worldCursor.GetComponent<Image>().enabled = true;
         }
@@ -1531,6 +1531,8 @@ public class ComputerInteractions : MonoBehaviour
         {
             sortedPapers[i].transform.position = new Vector3(sortedPapers[i].transform.position.x, -2.1f + Convert.ToSingle(i) / 500f, sortedPapers[i].transform.position.z);
         }
+        paper = null;
+        yield break;
     }
     public IEnumerator SearchDatabase(string prompt)
     {
