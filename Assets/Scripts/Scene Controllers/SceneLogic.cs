@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using System;
 using System.Linq;
 using System.Collections;
@@ -81,12 +81,15 @@ public class SceneLogic : MonoBehaviour
 
 public class Person
 {
+    public string name;
     public string id;
     public int age;
-    public string gender;
     public string dateOfBirth;
+    public string gender;
     public string citizenship;
-    public string name;
+    public string birthCountry;
+    public string birthPlace;
+    public Dictionary<string, Person> relatives = new Dictionary<string, Person>();
     public Person()
     {
         id = GenerateID();
@@ -99,22 +102,161 @@ public class Person
         gender = possibleGenders[UnityEngine.Random.Range(0, possibleGenders.Length)];
         dateOfBirth = GenerateDateOfBirth(age);
         citizenship = GenerateCitizenship();
-        name = GenerateName(gender);
+        name = GenerateName(gender, citizenship);
     }
-    public string GenerateName(string gender)
+    public string GenerateName(string gender, string citizenship)
     {
         string firstName = "";
         string secondName = "";
+        string[] africanMaleNames = { "" };
+        
+        //"Shaimaa", "Fatma", "Maha", "Reem", "Farida", "Aya", "Ashraqat", "Sahar", "Fatin", "Marina", "Malak", "Habiba", "Hana", "Marwa", ""
         string[] MaleNames = { "Oliver", "Ethan", "Lucas", "Noah", "Mathias", "Daniel", "Miguel", "Arthur", "Sus", "Liam", "James", "John", "Robert", "Michael" };
         string[] FemaleNames = { "Olivia", "Vilgelmina", "Anna" };
         string[] surnames = { "Jones", "Sus" };
+
+        switch(citizenship)
+        {
+            case "South Africa":
+                if (gender == "male")
+                {
+                    string[] maleNames = { "Lethabo", "Melokuhle", "Lethokuhle", "Omphile", "Ofentse", "Lubanzi", "Junior", "Siphosethu", "Lwandle", "Banele" };
+                    firstName = maleNames[UnityEngine.Random.Range(0, maleNames.Length)];
+                }
+                if (gender == "female")
+                {
+                    string[] femaleNames = { "Lethabo", "Melokuhle", "Lethokuhle", "Omphile", "Iminathi", "Lisakhanya", "Amahle", "Lesedi", "Asemahle", "Rethabile" };
+                    firstName = femaleNames[UnityEngine.Random.Range(0, femaleNames.Length)];
+                }
+                break;
+            case "Egypt":
+                if (gender == "male")
+                {
+                    string[] maleNames = { "Mohamed", "Mohamed", "Mohamed", "Mohamed", "Mohamed", "Youssef", "Ahmed", "Ahmed", "Ahmed", "Mahmoud", "Mustafa", "Khaled", "Omar", "Ali", "Ibrahim", "Taha" };
+                    firstName = maleNames[UnityEngine.Random.Range(0, maleNames.Length)];
+                }
+                if (gender == "female")
+                {
+                    string[] femaleNames = { "Shaimaa", "Fatma", "Maha", "Reem", "Farida", "Aya", "Shahd", "Sahar", "Fatin", "Habiba" };
+                    firstName = femaleNames[UnityEngine.Random.Range(0, femaleNames.Length)];
+                }
+                break;
+            case "Brazil":
+                if (gender == "male")
+                {
+                    string[] maleNames = { "Miguel", "Arthur", "Gael", "Théo", "Gabriel", "José", "João", "Antônio", "Francisco", "Pedro", "Carlos", "Marcos" };
+                    firstName = maleNames[UnityEngine.Random.Range(0, maleNames.Length)];
+                }
+                if (gender == "female")
+                {
+                    string[] femaleNames = { "Helena", "Alice", "Laura", "Sophia", "Cecília", "Isabella", "Maria", "Ana", "Francisca", "Adriana", "Juliana", "Patrícia" };
+                    firstName = femaleNames[UnityEngine.Random.Range(0, femaleNames.Length)];
+                }
+                break;
+            case "Argentina":
+                if (gender == "male")
+                {
+                    string[] maleNames = { "Mateo", "Bautista", "Juan", "Felipe", "Bruno", "Noah", "Benicio", "Thiago", "Ciro", "Liam" };
+                    firstName = maleNames[UnityEngine.Random.Range(0, maleNames.Length)];
+                }
+                if (gender == "female")
+                {
+                    string[] femaleNames = { "Emma", "Olivia", "Martina", "Isabella", "Alma", "Catalina", "Mia", "Ambar", "Victoria", "Delfina" };
+                    firstName = femaleNames[UnityEngine.Random.Range(0, femaleNames.Length)];
+                }
+                break;
+            case "Mexico":
+                if (gender == "male")
+                {
+                    string[] maleNames = { "Santiago", "Mateo", "Sebastián", "Leonardo", "Matías", "Emiliano", "Diego", "Daniel", "Miguel", "Ángel" };
+                    firstName = maleNames[UnityEngine.Random.Range(0, maleNames.Length)];
+                }
+                if (gender == "female")
+                {
+                    string[] femaleNames = { "Sofía", "Valentina", "Regina", "María José", "Ximena", "Camila", "María Fernanda", "Valeria", "Victoria", "Renata" };
+                    firstName = femaleNames[UnityEngine.Random.Range(0, femaleNames.Length)];
+                }
+                break;
+            case "Canada":
+                if (gender == "male")
+                {
+                    string[] maleNames = { "Noah", "Liam", "William", "Leo", "Theodore", "Oliver", "Benjamin", "Thomas", "Lucas", "Jacob", "Edouard", "Louis" };
+                    firstName = maleNames[UnityEngine.Random.Range(0, maleNames.Length)];
+                }
+                if (gender == "female")
+                {
+                    string[] femaleNames = { "Olivia", "Emma", "Charlotte", "Amelia", "Sophia", "Chloe", "Mia", "Lily", "Mila", "Florence", "Alice", "Juliette", "Rose" };
+                    firstName = femaleNames[UnityEngine.Random.Range(0, femaleNames.Length)];
+                }
+                break;
+            case "United States":
+                if (gender == "male")
+                {
+                    string[] maleNames = { "Liam", "Noah", "Oliver", "James", "Elijah", "William", "Henry", "Lucas", "Theodore", "James", "John", "Robert", "Michael", "Charles", "Richard" };
+                    firstName = maleNames[UnityEngine.Random.Range(0, maleNames.Length)];
+                }
+                if (gender == "female")
+                {
+                    string[] femaleNames = { "Olivia", "Emma", "Mary", "Patricia", "Linda", "Barbara", "Elizabeth", "Jennifer", "Maria", "Susan", "Margaret", "Dorothy", "Amelia", "Tiffany" };
+                    firstName = femaleNames[UnityEngine.Random.Range(0, femaleNames.Length)];
+                }
+                break;
+            case "India":
+                if (gender == "male")
+                {
+                    string[] maleNames = { "Muhammad", "Ram", "Sri", "Santosh", "Sanjay", "Sunil", "Rajesh", "Ramesh", "Ashok", "Manoj", "Abdul", "Anil" };
+                    firstName = maleNames[UnityEngine.Random.Range(0, maleNames.Length)];
+                }
+                if (gender == "female")
+                {
+                    string[] femaleNames = { "Sunita", "Anita", "Gita", "Rekha", "Lakshmi", "Manju", "Shanti", "Usha", "Asha" };
+                    firstName = femaleNames[UnityEngine.Random.Range(0, femaleNames.Length)];
+                }
+                break;
+            case "China":
+                if (gender == "male")
+                {
+                    string[] maleNames = { "Nushi", "Wei", "Yan", "Li", "Ying", "Hui", "Lei", "Hong", "Yu", "Min", "Xin", "Bin", "Ping", "Lin", "Yong", "Ming", "Qin", "Peng", "Qiang", "Yun", "Jin" };
+                    firstName = maleNames[UnityEngine.Random.Range(0, maleNames.Length)];
+                }
+                if (gender == "female")
+                {
+                    string[] femaleNames = { "Nushi", "Wei", "Yan", "Li", "Ying", "Hui", "Lei", "Hong", "Yu", "Min", "Xin", "Bin", "Ping", "Lin", "Yong", "Ming", "Qin", "Peng", "Qiang", "Yun", "Jin" };
+                    firstName = femaleNames[UnityEngine.Random.Range(0, femaleNames.Length)];
+                }
+                break;
+            case "Japan":
+                if (gender == "male")
+                {
+                    string[] maleNames = { "Kenji", "Hiroshi", "Toshio", "Yoshio", "Kazuo", "Akira", "Masao", "Kiyoshi", "Takashi", "Yukio", "Hideo", "Koichi", "Koji", "Takeshi" };
+                    firstName = maleNames[UnityEngine.Random.Range(0, maleNames.Length)];
+                }
+                if (gender == "female")
+                {
+                    string[] femaleNames = { "Kenji", "Shigeru", "Sachiko", "Masako", "Katsumi", "Yoko", "Michiko", "Yoshiko", "Hiromi", "Hiroko", "Keiko", "Hisako", "Yoshimi" };
+                    firstName = femaleNames[UnityEngine.Random.Range(0, femaleNames.Length)];
+                }
+                break;
+            case "South Korea":
+                if (gender == "male")
+                {
+                    string[] maleNames = { "Seo-Jun", "Ji-U", "Min-Jun", "Seo-Jun", "Ju-Won", "Ye-Jun", "Si-U", "Do-Yun", "Ji-Hu", "Seo-Jin", "Ji-Ho", "Ha-Jun" };
+                    firstName = maleNames[UnityEngine.Random.Range(0, maleNames.Length)];
+                }
+                if (gender == "female")
+                {
+                    string[] femaleNames = { "Ji-U", "Seo-Yun", "Seo-Yeon", "Min-Seo", "Seo-Hyeon", "Ji-Min", "Ji-Won", "Ha-Yun", "Yun-Seo", "Ha-Eun", "Ji-Yu" };
+                    firstName = femaleNames[UnityEngine.Random.Range(0, femaleNames.Length)];
+                }
+                break;
+        }
         if (gender == "male")
         {
             firstName = MaleNames[UnityEngine.Random.Range(0, MaleNames.Length)];
         }
         else if (gender == "female")
         {
-            firstName = FemaleNames[UnityEngine.Random.Range(0, FemaleNames.Length)];
+            
         }
         secondName = surnames[UnityEngine.Random.Range(0, surnames.Length)];
 
