@@ -1509,7 +1509,7 @@ public class ComputerInteractions : MonoBehaviour
     public IEnumerator PrintAnimation()
     {
         GameObject paper = Instantiate(paperPrefab, new Vector3(6.6f, -0.2f, 1.5f), Quaternion.Euler(0, 5, 0));
-        paper.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = openedPerson.name;
+        paper.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = openedPerson.firstName + " " + openedPerson.secondName;
         paper.transform.GetChild(0).transform.GetChild(3).GetComponent<Text>().text = openedPerson.age.ToString();
         paper.transform.GetChild(0).transform.GetChild(4).GetComponent<Text>().text = openedPerson.gender;
         paper.transform.GetChild(0).transform.GetChild(5).GetComponent<Text>().text = openedPerson.dateOfBirth;
@@ -1542,13 +1542,13 @@ public class ComputerInteractions : MonoBehaviour
 
         foreach(Person person in sceneLogic.people.Values)
         {
-            if (person.name.ToLower().Contains(prompt.ToLower()) || person.id.ToLower() == prompt.ToLower())
+            if ((person.firstName + " " + person.secondName).ToLower().Contains(prompt.ToLower()) || person.id.ToLower() == prompt.ToLower())
             {
                 GameObject item = Instantiate(databaseItemPrefab);
                 item.GetComponent<ItemScript>().attachedPerson = person;
                 item.transform.SetParent(gameObject.transform.GetChild(2).transform.GetChild(1).transform.GetChild(3).transform.GetChild(0), false);
                 item.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 250 - 80 * count, 0);
-                item.transform.GetChild(0).GetComponent<TMP_Text>().text = person.name + " | " + person.id;
+                item.transform.GetChild(0).GetComponent<TMP_Text>().text = person.firstName + " " + person.secondName + " | " + person.id;
                 count++;
                 if(count < 10)
                 {

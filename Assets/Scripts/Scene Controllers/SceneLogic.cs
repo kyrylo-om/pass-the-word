@@ -8,6 +8,8 @@ using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Unity.VisualScripting;
+using UnityEngine.Assertions.Must;
 
 public class SceneLogic : MonoBehaviour
 {
@@ -35,14 +37,6 @@ public class SceneLogic : MonoBehaviour
     void Update()
     {
         cursor.transform.position = Input.mousePosition;
-
-        if (Input.GetKeyDown(KeyCode.Slash))
-        {
-            foreach (string key in people.Keys.ToList())
-            {
-                Debug.Log("Key: " + key + "; Name: " + people[key].name);
-            }
-        }
 
         if (isFlickering)
         {
@@ -81,7 +75,8 @@ public class SceneLogic : MonoBehaviour
 
 public class Person
 {
-    public string name;
+    public string firstName;
+    public string secondName;
     public string id;
     public int age;
     public string dateOfBirth;
@@ -89,9 +84,19 @@ public class Person
     public string citizenship;
     public string birthCountry;
     public string birthPlace;
-    public Dictionary<string, Person> relatives = new Dictionary<string, Person>();
+    public Dictionary<string, Person> parents = new Dictionary<string, Person>();
+    public Person spouse;
+    public Dictionary<string, Person> children = new Dictionary<string, Person>();
+    public Dictionary<string, Person> siblings = new Dictionary<string, Person>();
+    public Dictionary<string, Person> exes = new Dictionary<string, Person>();
+    public Dictionary<string, Person> pets = new Dictionary<string, Person>();
+
     public Person()
     {
+        if(parents.Count == 0)
+        {
+            Debug.Log("das");
+        }
         id = GenerateID();
         while (SceneLogic.instance.people.ContainsKey(id))
         {
@@ -102,12 +107,11 @@ public class Person
         gender = possibleGenders[UnityEngine.Random.Range(0, possibleGenders.Length)];
         dateOfBirth = GenerateDateOfBirth(age);
         citizenship = GenerateCitizenship();
-        name = GenerateName(gender, citizenship);
+        firstName = GenerateFirstName(gender, citizenship);
     }
-    public string GenerateName(string gender, string citizenship)
+    public string GenerateFirstName(string gender, string citizenship)
     {
         string firstName = "";
-        string secondName = "";
 
         switch(citizenship)
         {
@@ -380,7 +384,7 @@ public class Person
     }
     public string GenerateDateOfBirth(int age)
     {
-        string date = Convert.ToString(UnityEngine.Random.Range(1, 29));
+        string date = Convert.ToString(UnityEngine.Random.Range(1, 30));
         string[] possibleMonths = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
         string month = possibleMonths[UnityEngine.Random.Range(0, 11)];
         string year = Convert.ToString(2023 - age);

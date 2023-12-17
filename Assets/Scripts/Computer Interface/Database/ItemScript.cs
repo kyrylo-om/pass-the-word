@@ -39,6 +39,6 @@ public class ItemScript : MonoBehaviour
     }
     public void OpenPersonInfo()
     {
-        computerInteractions.OpenPersonInfo(attachedPerson.name, attachedPerson.age, attachedPerson.gender, attachedPerson.citizenship, attachedPerson);
+        computerInteractions.OpenPersonInfo(attachedPerson.firstName + " " + attachedPerson.secondName, attachedPerson.age, attachedPerson.gender, attachedPerson.citizenship, attachedPerson);
     }
 }
