@@ -105,7 +105,7 @@ public class ComputerInteractions : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Physics.Raycast(ray, out RaycastHit raycastHit);
-        if(raycastHit.collider != null)
+        if (raycastHit.collider != null)
         {
             if (raycastHit.transform.name == "MonitorCollider")
             {
@@ -117,7 +117,7 @@ public class ComputerInteractions : MonoBehaviour
 
         if (isMonitorCursorActive)
         {
-            
+
         }
         if (currentTab == "printer")
         {
@@ -168,7 +168,7 @@ public class ComputerInteractions : MonoBehaviour
         {
             //historyTab.GetComponent<Canvas>().enabled = true;
         }
-        if (menu == "printer") 
+        if (menu == "printer")
         {
             databaseAnimator.SetBool("IsPlayingInitAnim", true);
             PTanimator.SetBool("PasswordCensored", true);
@@ -177,7 +177,7 @@ public class ComputerInteractions : MonoBehaviour
             PTanimator.SetBool("IsPlayingInitAnim", false);
             PTanimator.SetTrigger("Reset");
             Invoke("StartDatabaseSearch", 0.4f);
-            if(personInfoWindowOpened) databaseAnimator.SetTrigger("OpenWindow");
+            if (personInfoWindowOpened) databaseAnimator.SetTrigger("OpenWindow");
         }
         currentTab = menu;
     }
@@ -581,7 +581,7 @@ public class ComputerInteractions : MonoBehaviour
             if (!isPTIdAnimRunning) idText.text = id;
         }
 
-        if(passwordTabInput == "password")
+        if (passwordTabInput == "password")
         {
             if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift))
             {
@@ -985,7 +985,7 @@ public class ComputerInteractions : MonoBehaviour
     }
     public void EnterButtonClick()
     {
-        if(id == "admin" && password == "admin1234password")
+        if (id == "admin" && password == "admin1234password")
         {
             PTanimator.SetTrigger("LoginSuccess");
         }
@@ -1000,13 +1000,13 @@ public class ComputerInteractions : MonoBehaviour
     }
     public void SwitchPasswordTabField(string input)
     {
-        if(passwordTabInput != input)
+        if (passwordTabInput != input)
         {
             //enterBar1.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/passwordTabEnterBarInactive");
             //enterBar2.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/passwordTabEnterBarInactive");
             if (input == "id")
             {
-                if(passwordTabInput != "none") PTanimator.SetBool("IsLine2Active", false);
+                if (passwordTabInput != "none") PTanimator.SetBool("IsLine2Active", false);
                 PTanimator.SetBool("IsLine1Active", true);
                 PTanimator.SetBool("PasswordCensored", true);
             }
@@ -1034,7 +1034,7 @@ public class ComputerInteractions : MonoBehaviour
         }
 
         scrollingVelocity -= Input.mouseScrollDelta.y * scrollSpeed;
-        content.anchoredPosition += new Vector2(0,scrollingVelocity);
+        content.anchoredPosition += new Vector2(0, scrollingVelocity);
 
         if (Math.Sign(scrollingVelocity) > 0 && scrollingVelocity > 0) scrollingVelocity -= 2;
         else if (Math.Sign(scrollingVelocity) < 0 && scrollingVelocity < 0) scrollingVelocity += 2;
@@ -1443,14 +1443,14 @@ public class ComputerInteractions : MonoBehaviour
 
         nameToFindText.text = nameToFind;
 
-        if(nameToFind == "" && isThereConsoleText)
+        if (nameToFind == "" && isThereConsoleText)
         {
             isThereConsoleText = false;
             underscore.enabled = false;
             consoleArrow.enabled = true;
             searchButtonText.text = "Show all";
         }
-        else if(nameToFind != "" && !isThereConsoleText)
+        else if (nameToFind != "" && !isThereConsoleText)
         {
             isThereConsoleText = true;
             consoleArrow.enabled = true;
@@ -1463,7 +1463,7 @@ public class ComputerInteractions : MonoBehaviour
 
     public void StartDatabaseSearch()
     {
-        if(!isSearching) StartCoroutine(SearchAnimation());
+        if (!isSearching) StartCoroutine(SearchAnimation());
     }
     public IEnumerator SearchAnimation()
     {
@@ -1471,13 +1471,13 @@ public class ComputerInteractions : MonoBehaviour
         resultsText.text = "";
         noResultsText.text = "";
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("DatabaseItem")) Destroy(obj);
-        int duration = UnityEngine.Random.Range(20,50);
+        int duration = UnityEngine.Random.Range(20, 50);
 
         queryingText.color = new Color(0, 0.59f, 0.05f, 1);
         loadingArrow.color = new Color(0, 0.59f, 0.05f, 1);
         for (int i = 0; i < duration; i++)
         {
-            loadingArrow.transform.localEulerAngles -= new Vector3(0,0,7);
+            loadingArrow.transform.localEulerAngles -= new Vector3(0, 0, 7);
             yield return new WaitForSeconds(0.001f);
         }
         queryingText.color = new Color(0, 0.59f, 0.05f, 0);
@@ -1529,8 +1529,8 @@ public class ComputerInteractions : MonoBehaviour
             paper.transform.localPosition -= paper.transform.forward * Time.deltaTime * 3;
             yield return new WaitForEndOfFrame();
         }
-        paper.transform.position = new Vector3(UnityEngine.Random.Range(-4,4), -2.1f, UnityEngine.Random.Range(-6.5f, - 3.8f));
-        paper.transform.rotation = Quaternion.Euler(0, UnityEngine.Random.Range(-50,50),0);
+        paper.transform.position = new Vector3(UnityEngine.Random.Range(-4, 4), -2.1f, UnityEngine.Random.Range(-6.5f, -3.8f));
+        paper.transform.rotation = Quaternion.Euler(0, UnityEngine.Random.Range(-50, 50), 0);
         List<GameObject> sortedPapers = GameObject.FindGameObjectsWithTag("Paper").OrderBy(o => o.transform.position.y).ToList();
         for (int i = 0; i < sortedPapers.Count; i++)
         {
@@ -1545,7 +1545,7 @@ public class ComputerInteractions : MonoBehaviour
         int count = 0;
         //List<Person> searchResults = new List<Person>();
 
-        foreach(Person person in sceneLogic.people.Values)
+        foreach (Person person in sceneLogic.people.Values)
         {
             if ((person.firstName + " " + person.secondName).ToLower().Contains(prompt.ToLower()) || person.id.ToLower() == prompt.ToLower())
             {
@@ -1563,7 +1563,7 @@ public class ComputerInteractions : MonoBehaviour
                     if (person.age < 18) item.transform.GetChild(3).GetComponent<TMP_Text>().text = "underage";
                 }
                 count++;
-                if(count < 10)
+                if (count < 10)
                 {
                     yield return new WaitForSeconds(0.03f);
                 }
@@ -1577,7 +1577,7 @@ public class ComputerInteractions : MonoBehaviour
         {
             resultsText.text = "showing " + count + " out of " + sceneLogic.people.Count + " available results within employee's work limit.";
         }
-        panelHeight = Math.Clamp(count * 80 - 580,0,999999999);
+        panelHeight = Math.Clamp(count * 80 - 580, 0, 999999999);
         isSearching = false;
     }
     public void OpenPersonInfo(string name, int age, string gender, string citizenship, Person attachedPerson)
@@ -1609,7 +1609,7 @@ public class ComputerInteractions : MonoBehaviour
     }
     public void ClosePersonInfo()
     {
-        if(personInfoWindowOpened)
+        if (personInfoWindowOpened)
         {
             openedPerson = null;
             personInfoWindowOpened = false;
@@ -1635,7 +1635,7 @@ public class ComputerInteractions : MonoBehaviour
     {
         showCompromised = !showCompromised;
         StartDatabaseSearch();
-        if(showCompromised)
+        if (showCompromised)
         {
             checkmark.color = new Color(0.08f, 0.68f, 0, 1);
         }
@@ -1669,9 +1669,9 @@ public class ComputerInteractions : MonoBehaviour
     public IEnumerator ConsoleAnim()
     {
         bool animIterator = true;
-        while(true)
+        while (true)
         {
-            if(!isThereConsoleText)
+            if (!isThereConsoleText)
             {
                 if (animIterator)
                 {
@@ -1697,7 +1697,7 @@ public class ComputerInteractions : MonoBehaviour
                     animIterator = true;
                 }
             }
-            
+
             yield return new WaitForSeconds(0.5f);
         }
     }
@@ -1718,10 +1718,10 @@ public class ComputerInteractions : MonoBehaviour
     }
     IEnumerator ConsoleTextAnim()
     {
-        string text = "NOBILITY Corporation\r\n\r\n\0Microforms Wisdoms [Version 10.0.10945.3448]\r\n(copyright) Microforms Corporation. All rights reserved.\0\r\n\r\n\r\nOperating system: Wisdoms 7 (32 bit); IP: 197.108.64.21; Device name: Rostov's PC; Connected network: roshome; Domain: HC_Service; \r\nDate: 04.10.2023;\0\r\nEmployeePersonalInformation = {['name'] = \"michael\", ['surname'] = \"rostov\", ['age'] = 37, ['gender'] = \"m\", [dateOfBirth'] = \"02.11.1986\",\r\n['citizenship'] = \"canada\", ['uniqueId'] = \"nGi5p2\"}\r\n\r\n\0inc.NOBILITYNetwork Status . . . . . . . . . . . . . . . . . . . . . . . . . . : Available\r\nGovernmentServices Status. . . . . . . . . . . . . . . . . . . . . . . . . . . : Blocked\r\nVPN Status . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . : Connected          (France, Paris)\r\nSafetyProtocols. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . : Disabled\r\nPeopleDatabaseStatus . . . . . . . . . . . . . . . . . . . . . . . . . . . . . : Accessed\r\nHistoryBrowserServices . . . . . . . . . . . . . . . . . . . . . . . . . . . . : Available\r\ninc.NOBILITYApproval . . . . . . . . . . . . . . . . . . . . . . . . . . . . . : Granted\r\n\r\n\r\nUniqueNOBILITYIdentificationKey: 99C16B81-D151-4EE0-A8C4-493C9091E944\r\n\r\n\r\n\0Startup initialized\0        Awaiting input...\\\n\n(Íàæì³òü Tab)";
+        string text = "NOBILITY Corporation\r\n\r\n\0Microforms Wisdoms [Version 10.0.10945.3448]\r\n(copyright) Microforms Corporation. All rights reserved.\0\r\n\r\n\r\nOperating system: Wisdoms 7 (32 bit); IP: 197.108.64.21; Device name: Rostov's PC; Connected network: roshome; Domain: HC_Service; \r\nDate: 04.10.2023;\0\r\nEmployeePersonalInformation = {['name'] = \"michael\", ['surname'] = \"rostov\", ['age'] = 37, ['gender'] = \"m\", [dateOfBirth'] = \"02.11.1986\",\r\n['citizenship'] = \"canada\", ['uniqueId'] = \"nGi5p2\"}\r\n\r\n\0inc.NOBILITYNetwork Status . . . . . . . . . . . . . . . . . . . . . . . . . . : Available\r\nGovernmentServices Status. . . . . . . . . . . . . . . . . . . . . . . . . . . : Blocked\r\nVPN Status . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . : Connected          (France, Paris)\r\nSafetyProtocols. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . : Disabled\r\nPeopleDatabaseStatus . . . . . . . . . . . . . . . . . . . . . . . . . . . . . : Accessed\r\nHistoryBrowserServices . . . . . . . . . . . . . . . . . . . . . . . . . . . . : Available\r\ninc.NOBILITYApproval . . . . . . . . . . . . . . . . . . . . . . . . . . . . . : Granted\r\n\r\n\r\nUniqueNOBILITYIdentificationKey: 99C16B81-D151-4EE0-A8C4-493C9091E944\r\n\r\n\r\n\0Startup initialized\0        Awaiting input...\\\n\n(?????? Tab)";
         int i = 0;
         int speed = 2;
-        while(i < text.Length)
+        while (i < text.Length)
         {
             for (int j = 0; j < speed && i < text.Length; j++)
             {

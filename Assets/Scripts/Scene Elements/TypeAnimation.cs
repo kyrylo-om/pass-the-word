@@ -322,21 +322,25 @@ public class TypeAnimation : MonoBehaviour
     }
     IEnumerator KeyDownAnim(GameObject key)
     {
-        StopCoroutine(KeyUpAnim(key));
-        while(key.transform.localPosition.y >= -0.12f)
+        if (key.tag == "Key Animatable")
         {
-            key.transform.localPosition -= new Vector3(0, 0.02f, 0);
-            yield return new WaitForEndOfFrame();
+            key.tag = "Untagged";
+            while (key.transform.localPosition.z >= 0.005f)
+            {
+                key.transform.localPosition -= new Vector3(0, 0, 0.002f);
+                yield return new WaitForEndOfFrame();
+            }
+            if (key.transform.localPosition.z < 0.005f) StartCoroutine(KeyUpAnim(key));
         }
-        if(key.transform.localPosition.y < -0.12f) StartCoroutine(KeyUpAnim(key));
         
     }
     IEnumerator KeyUpAnim(GameObject key)
     {
-        while (key.transform.localPosition.y < 0.02f)
+        while (key.transform.localPosition.z < 0.02f)
         {
-            key.transform.localPosition += new Vector3(0, 0.02f, 0);
+            key.transform.localPosition += new Vector3(0, 0, 0.002f);
             yield return new WaitForEndOfFrame();
         }
+        key.tag = "Key Animatable";
     }
 }

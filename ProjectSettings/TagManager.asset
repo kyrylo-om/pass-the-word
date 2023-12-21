@@ -10,6 +10,7 @@ TagManager:
   - Num
   - DatabaseItem
   - Computer Interface
+  - Key Animatable
   layers:
   - Default
   - TransparentFX

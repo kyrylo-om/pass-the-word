@@ -28,7 +28,7 @@ public class CameraLook: MonoBehaviour
         if (gameStateScript.gameState == "cameraUp")
         {
             Camera.transform.Rotate(-3, 0, 0);
-            if (Camera.transform.rotation.x <= 0.05f)
+            if (Camera.transform.rotation.x <= 0.07f)
             {
                 gameStateScript.arrowDown.color = new Color(gameStateScript.arrowDown.color.r, gameStateScript.arrowDown.color.g, gameStateScript.arrowDown.color.b, 1);
                 gameStateScript.gameState = "computer";
