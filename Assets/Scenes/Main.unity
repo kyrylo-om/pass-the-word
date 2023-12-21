@@ -3058,7 +3058,7 @@ MonoBehaviour:
   databaseItemPrefab: {fileID: 6412661242766897423, guid: c07aa52d94d978f46b8b811829a3c6c8, type: 3}
   resultsText: {fileID: 1111430584}
   content: {fileID: 1545975334}
-  printButton: {fileID: 0}
+  printButton: {fileID: 968540371}
   checkmark: {fileID: 1811264136}
   searchButtonText: {fileID: 1103228229}
   nameToFindText: {fileID: 240701653}
@@ -3068,9 +3068,14 @@ MonoBehaviour:
   consoleArrow: {fileID: 850423842}
   underscore: {fileID: 1366711463}
   infoText: {fileID: 1495718514}
+  moreInfoText: {fileID: 856525859}
   personNameText: {fileID: 1197506283}
   personPortrait: {fileID: 658306103}
   printText: {fileID: 1398174350}
+  infoOption1: {fileID: 1889892030}
+  infoOption2: {fileID: 1352914785}
+  infoOption3: {fileID: 1056937428}
+  infoOption4: {fileID: 734071043}
   paperPrefab: {fileID: 8922298046312102826, guid: 29602dc98d803f6419678f13f7652bc9, type: 3}
   nameToFind: 
   scrollSpeed: 10
@@ -8776,9 +8781,14 @@ MonoBehaviour:
   consoleArrow: {fileID: 0}
   underscore: {fileID: 0}
   infoText: {fileID: 0}
+  moreInfoText: {fileID: 0}
   personNameText: {fileID: 0}
   personPortrait: {fileID: 0}
   printText: {fileID: 0}
+  infoOption1: {fileID: 0}
+  infoOption2: {fileID: 0}
+  infoOption3: {fileID: 0}
+  infoOption4: {fileID: 0}
   paperPrefab: {fileID: 0}
   nameToFind: 
   scrollSpeed: 0

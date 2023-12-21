@@ -10,6 +10,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Unity.VisualScripting;
 using UnityEngine.Assertions.Must;
+using System.Threading;
 
 public class SceneLogic : MonoBehaviour
 {
@@ -45,6 +46,11 @@ public class SceneLogic : MonoBehaviour
             pointLight.intensity = Convert.ToSingle(randomIntensity * 1d + 1);
 
         }
+
+        if (Input.GetKeyDown(KeyCode.Slash))
+        {
+            GeneratePerson();
+        }
     }
     void LightFlicker()
     {
@@ -59,18 +65,12 @@ public class SceneLogic : MonoBehaviour
     
     public void GenerateDatabase()
     {
-        for(int i = 0; i < UnityEngine.Random.Range(200,250); i++)
-        {
-            GeneratePerson();
-        }
+        GeneratePerson();
     }
     public void GeneratePerson()
     {
-        Person newPerson = new Person();
-        people.Add(newPerson.id, newPerson);
+        Person newPerson = new Person(_citizenship: "Ukraine", _age: 1);
     }
-
-    
 }
 
 public class Person
@@ -84,30 +84,141 @@ public class Person
     public string citizenship;
     public string birthCountry;
     public string birthPlace;
-    public Dictionary<string, Person> parents = new Dictionary<string, Person>();
+    public bool isDead = false;
+    public bool isCompromised = false;
+    public Person parent1;
+    public Person parent2;
     public Person spouse;
-    public Dictionary<string, Person> children = new Dictionary<string, Person>();
-    public Dictionary<string, Person> siblings = new Dictionary<string, Person>();
-    public Dictionary<string, Person> exes = new Dictionary<string, Person>();
-    public Dictionary<string, Person> pets = new Dictionary<string, Person>();
+    public List<Person> children;
+    public List<Person> siblings;
+    public List<Person> pets;
+    public List<Person> exes = new List<Person>();
 
-    public Person()
+    public Person(string _secondName = null, int _age = 0, string _gender = null, string _citizenship = null, string _birthCountry = null, Person _parent1 = null, Person _parent2 = null, Person _spouse = null, List<Person> _children = null, List<Person> _siblings = null, List<Person> _pets = null)
     {
-        if(parents.Count == 0)
-        {
-            Debug.Log("das");
-        }
         id = GenerateID();
         while (SceneLogic.instance.people.ContainsKey(id))
         {
             id = GenerateID();
         }
-        age = GenerateAge();
-        string[] possibleGenders = { "male", "female" };
-        gender = possibleGenders[UnityEngine.Random.Range(0, possibleGenders.Length)];
+
+        SceneLogic.instance.people.Add(this.id, this);
+
+        if (_age == 0)
+        {
+            age = GenerateAge();
+        }
+        else
+        {
+            age = _age;
+        }
+
+        if (_citizenship == null)
+        {
+            citizenship = GenerateCitizenship();
+        }
+        else
+        {
+            citizenship = _citizenship;
+        }
+
+        Dictionary<string, int> lifeExpectancy = new Dictionary<string, int> { { "United States", 77}, { "Great Britain", 80}, { "Brazil", 74}, { "France", 82 }, { "Germany", 81}, { "China", 78}, { "Japan", 85}, { "Italy", 82}, { "Ukraine", 71}, { "South Africa", 65}, { "India", 70}, { "Canada", 82}, { "Australia", 83}, { "Egypt", 71 }, { "United Arab Emirates", 79 }, { "Saudi Arabia", 76 }, { "Turkey", 76 }, { "Iran", 75 }, { "Spain", 82 }, { "Portugal", 81}, { "Argentina", 76 }, { "Mexico", 70 }, { "Ireland", 82}, { "South Korea", 83 }, { "North Korea", 73}, { "Belgium", 81 }, { "Denmark", 82 }, { "Greece", 81 }, { "Netherlands", 81 }, { "Poland", 76 }, { "Sweden", 82 }, { "Russia", 71 } };
+
+        if (age > lifeExpectancy[citizenship] + UnityEngine.Random.Range(-10,10))
+        {
+            isDead = true;
+        }
+        else
+        {
+            
+        }
+
+        if (_gender == null)
+        {
+            string[] possibleGenders = { "male", "female" };
+            gender = possibleGenders[UnityEngine.Random.Range(0, possibleGenders.Length)];
+        }
+        else
+        {
+            gender = _gender;
+        }
+
+        if (_secondName == null)
+        {
+            secondName = GenerateFirstName(gender, citizenship);
+        }
+        else
+        {
+            secondName = _secondName;
+        }
+
+        Debug.Log(secondName);
+
+        if (!isDead)
+        {
+            if (_birthCountry == null)
+            {
+                birthCountry = GenerateCitizenship();
+            }
+            else
+            {
+                birthCountry = _birthCountry;
+            }
+
+            if (_parent1 == null)
+            {
+                parent1 = new Person(_children: new List<Person> { this }, _citizenship: this.citizenship, _age: age + UnityEngine.Random.Range(14, 50), _secondName: secondName);
+            }
+            else
+            {
+                parent1 = _parent1;
+            }
+
+            if (_parent2 == null)
+            {
+                parent2 = new Person(_children: new List<Person> { this }, _citizenship: this.citizenship, _age: (UnityEngine.Random.Range(0,10) < 0.9f ? parent1.age + UnityEngine.Random.Range(0,3) : parent1.age + UnityEngine.Random.Range(0, 25)), _gender: (parent1.gender == "male" ? "female" : "male"), _secondName: secondName);
+            }
+            else
+            {
+                parent2 = _parent2;
+            }
+
+            //optional stuff ahead
+            //if (_spouse == null)
+            //{
+            //    spouse = new Person { children = new List<Person> { this }, citizenship = this.citizenship, spouse = this };
+            //}
+            //else
+            //{
+            //    spouse = _spouse;
+            //}
+            //
+            //if (_parent1 == null)
+            //{
+            //    parent1 = new Person { children = new List<Person> { this }, citizenship = this.citizenship, parent1 = this };
+            //}
+            //else
+            //{
+            //    parent1 = _parent1;
+            //}
+            if (_children == null)
+            {
+
+            }
+            else
+            {
+                children = _children;
+            }
+        }
+
         dateOfBirth = GenerateDateOfBirth(age);
-        citizenship = GenerateCitizenship();
+
         firstName = GenerateFirstName(gender, citizenship);
+
+        if (parent1 == null)
+        {
+            //parent1 = new Person { children = new List<Person> { this }, citizenship = this.citizenship, parent1 = this};
+        }
     }
     public string GenerateFirstName(string gender, string citizenship)
     {
@@ -369,7 +480,7 @@ public class Person
                 break;
         }
 
-        return (firstName + " " + secondName);
+        return (firstName);
     }
     public int GenerateAge()
     {
