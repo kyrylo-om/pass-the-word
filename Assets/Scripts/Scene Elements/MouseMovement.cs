@@ -20,7 +20,7 @@ public class MouseMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(4.2f + monitorCursor.rectTransform.anchoredPosition.x / mouseSpeed, -2.1f, -1.5f + monitorCursor.rectTransform.anchoredPosition.y / mouseSpeed);
+        transform.position = new Vector3(6f + monitorCursor.rectTransform.anchoredPosition.x / mouseSpeed, -2.1f, -0f + monitorCursor.rectTransform.anchoredPosition.y / mouseSpeed);
 
         if (Input.GetKeyDown(KeyCode.Mouse0)) mouseButton1.transform.localPosition = new Vector3(0, -0.017f, 0);
         if (Input.GetKeyDown(KeyCode.Mouse1)) mouseButton2.transform.localPosition = new Vector3(0, -0.017f, 0);

@@ -61,14 +61,9 @@ public class ComputerInteractions : MonoBehaviour
     public Image consoleArrow;
     public Image underscore;
     public Text infoText;
-    public Text moreInfoText;
     public Text personNameText;
     public Image personPortrait;
     public Text printText;
-    public GameObject infoOption1;
-    public GameObject infoOption2;
-    public GameObject infoOption3;
-    public GameObject infoOption4;
     public GameObject paperPrefab;
     public string nameToFind;
     [SerializeField] private int scrollSpeed;
@@ -1492,7 +1487,7 @@ public class ComputerInteractions : MonoBehaviour
         {
             databaseAnimator.SetBool("IsPointerDownPrintButton", false);
             StartCoroutine(PrintingTextAnim());
-            StartCoroutine(PrintPaper());
+            StartCoroutine(PrintAnimation());
         }
     }
     public IEnumerator PrintingTextAnim()
@@ -1511,12 +1506,12 @@ public class ComputerInteractions : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
         isPlayingPrintAnim = false;
     }
-    public IEnumerator PrintPaper()
+    public IEnumerator PrintAnimation()
     {
         GameObject paper = Instantiate(paperPrefab, new Vector3(6.6f, -0.2f, 1.5f), Quaternion.Euler(0, 5, 0));
         paper.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = openedPerson.firstName + " " + openedPerson.secondName;
         paper.transform.GetChild(0).transform.GetChild(3).GetComponent<Text>().text = openedPerson.age.ToString();
-        paper.transform.GetChild(0).transform.GetChild(4).GetComponent<Text>().text = openedPerson.parent1.firstName;
+        paper.transform.GetChild(0).transform.GetChild(4).GetComponent<Text>().text = openedPerson.gender;
         paper.transform.GetChild(0).transform.GetChild(5).GetComponent<Text>().text = openedPerson.dateOfBirth;
         paper.transform.GetChild(0).transform.GetChild(6).GetComponent<Text>().text = openedPerson.citizenship;
         paper.transform.GetChild(0).transform.GetChild(8).GetComponent<Text>().text = openedPerson.id;
@@ -1554,14 +1549,6 @@ public class ComputerInteractions : MonoBehaviour
                 item.transform.SetParent(gameObject.transform.GetChild(2).transform.GetChild(1).transform.GetChild(3).transform.GetChild(0), false);
                 item.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 250 - 80 * count, 0);
                 item.transform.GetChild(0).GetComponent<TMP_Text>().text = person.firstName + " " + person.secondName + " | " + person.id;
-                if (person.isDead || person.isCompromised || person.age < 18)
-                {
-                    item.transform.GetChild(0).GetComponent<TMP_Text>().color = new Color(0.8f, 0.8f, 0.8f);
-                    item.GetComponent<Image>().color = new Color(1, 1, 1, 0);
-                    if (person.isDead) item.transform.GetChild(3).GetComponent<TMP_Text>().text = "dead";
-                    if (person.isCompromised) item.transform.GetChild(3).GetComponent<TMP_Text>().text = "compromised";
-                    if (person.age < 18) item.transform.GetChild(3).GetComponent<TMP_Text>().text = "underage";
-                }
                 count++;
                 if(count < 10)
                 {
@@ -1585,26 +1572,7 @@ public class ComputerInteractions : MonoBehaviour
         openedPerson = attachedPerson;
         personInfoWindowOpened = true;
         personNameText.text = name;
-        infoText.text = "Age: " + (attachedPerson.isDead ? "dead" : age.ToString()) + "\nGender: " + gender + "\nCitizenship: " + citizenship;
-        if (attachedPerson.isDead || age < 18)
-        {
-            moreInfoText.text = "Extended information unavailable";
-            infoOption1.SetActive(false);
-            infoOption2.SetActive(false);
-            infoOption3.SetActive(false);
-            infoOption4.SetActive(false);
-            printButton.SetActive(false);
-        }
-        else
-        {
-            moreInfoText.text = "Select information to print:";
-            infoOption1.SetActive(true);
-            infoOption2.SetActive(true);
-            infoOption3.SetActive(true);
-            infoOption4.SetActive(true);
-            printButton.SetActive(true);
-        }
-
+        infoText.text = "Age: " + age.ToString() + "\nGender: " + gender + "\nCitizenship: " + citizenship;
         databaseAnimator.SetTrigger("OpenWindow");
     }
     public void ClosePersonInfo()
